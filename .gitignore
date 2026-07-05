@@ -1,4 +1,7 @@
 # Ignore list for Eagle, a PCB layout tool
+git add .
+git commit -m "Initialize Kaitu V1 core architecture and tracking rules"
+git push origin main
 
 # Backup files
 *.s#?
@@ -17,6 +20,12 @@ eagle.epf
 # Autorouter files
 *.pro
 *.job
+*.venv
+*.env
+
+__pycache__/
+*.pyc
+memory.json
 
 # CAM files
 *.$$$
