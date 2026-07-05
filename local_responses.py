@@ -1,7 +1,7 @@
 import random
 from config import ASSISTANT_NAME, ASSISTANT_VERSION, USER_NAME
 
-# Expanded Intent Matching Matrix
+
 LOCAL_PHRASES = {
     "greeting": [
         "hi", "hii", "hello", "hey", "hey kaitu", "hello kaitu", 
@@ -57,6 +57,7 @@ LOCAL_RESPONSES = {
         f"Take care, {USER_NAME}. Chat with you soon!",
         "Signing off for now. Have an awesome rest of your day!",
         "Alright, shutting down. Let me know when you want to hang out again!"
+        f"{ASSISTANT_NAME} is going to sleep now. See you later, {USER_NAME}!"
     ],
 
     "identity": [
@@ -72,7 +73,7 @@ LOCAL_RESPONSES = {
         f"You're {USER_NAME}, an engineering student and the awesome developer who made me!",
         f"My records say you are {USER_NAME}, the boss and main user of this computer.",
         f"You are {USER_NAME}, my creator! You literally wrote my code yourself.",
-        f"Of course I know you! You're Kunal, my creator and friend.",
+        f"Of course I know you! You're {USER_NAME}, my creator and friend.",
         f"You're the head chef of this setup, {USER_NAME}!",
         f"You are {USER_NAME}, sitting right at your desk working on some cool projects."
     ],
@@ -81,7 +82,7 @@ LOCAL_RESPONSES = {
         f"I was designed and written line-by-line by you, {USER_NAME}!",
         f"You made me! My whole structure was initialized right here in your code editor.",
         f"Credit for making me completely goes to you, {USER_NAME}.",
-        f"You created me, Kunal! Built from scratch using Python scripting.",
+        f"You created me, {USER_NAME}! From scratch.",
         f"My developer is {USER_NAME}. You're the one pulling the strings!",
         f"I'm proud to say I was custom-built by you, {USER_NAME}."
     ],
