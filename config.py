@@ -1,6 +1,6 @@
 ASSISTANT_NAME = "Kaitu"
 USER_NAME = "Kunal"
-MODEL_NAME = "gemini-3.5-flash"
+MODEL_NAME = "gemini-2.5-flash"
 ASSISTANT_VERSION = "0a1"
 
 SYSTEM_PROMPT = f"""

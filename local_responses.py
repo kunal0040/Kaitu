@@ -56,7 +56,7 @@ LOCAL_RESPONSES = {
         "See you later! Don't work too hard, alright?",
         f"Take care, {USER_NAME}. Chat with you soon!",
         "Signing off for now. Have an awesome rest of your day!",
-        "Alright, shutting down. Let me know when you want to hang out again!"
+        "Alright, shutting down. Let me know when you want to hang out again!",
         f"{ASSISTANT_NAME} is going to sleep now. See you later, {USER_NAME}!"
     ],
 
