@@ -26,6 +26,7 @@ eagle.epf
 __pycache__/
 *.pyc
 memory.json
+app_registry.py
 
 # CAM files
 *.$$$

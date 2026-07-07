@@ -5,7 +5,7 @@ from urllib.parse import quote_plus
 
 from app_registry import APPLICATIONS, WEB_APPS
 from app_discovery import get_installed_apps
-from aliases import TARGET_ALIASES, COMMAND_ALIASES, normalize_target
+from aliases import COMMAND_ALIASES, normalize_target
 
 INSTALLED_APPS = get_installed_apps()
 
