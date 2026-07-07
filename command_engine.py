@@ -1,10 +1,9 @@
-import os
 import subprocess
 import webbrowser
 from urllib.parse import quote_plus
 
-from app_registry import APPLICATIONS, WEB_APPS
-from app_discovery import get_installed_apps
+from app_registry import WEB_SITES
+from app_discovery import get_installed_apps, close_application
 from aliases import COMMAND_ALIASES, normalize_target
 
 INSTALLED_APPS = get_installed_apps()
@@ -13,15 +12,11 @@ INSTALLED_APPS = get_installed_apps()
 def open_application(app_name):
     app_name = app_name.lower().strip()
     
-    app_path = APPLICATIONS.get(app_name)
-    web_url = WEB_APPS.get(app_name)
+    web_url = WEB_SITES.get(app_name)
     app_id = INSTALLED_APPS.get(app_name)
 
     try:
-        if app_path:
-            os.startfile(app_path)
-                
-        elif app_id:
+        if app_id:
             subprocess.Popen(["explorer.exe", f"shell:AppsFolder\\{app_id}"])
 
         elif web_url:
@@ -59,11 +54,18 @@ def detect_command(user_input):
     if not command:
         return None
 
-    target = normalize_target(target)
 
     if command == "open":
+        target = normalize_target(target)
         return {
             "command": "open_application",
+            "target": target
+        }
+    
+    elif command == "close":
+        target = normalize_target(target)
+        return {
+            "command": "close_application",
             "target": target
         }
 
@@ -85,5 +87,8 @@ def execute_command(command_data):
     
     elif command == "search_web":
         return search_web(target)
-    return None
+    
+    elif command == "close_application":
+        return close_application(target)
 
+    return None

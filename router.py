@@ -1,12 +1,12 @@
 from brain import ask_assistant
-from local_responses import get_local_response
+from local_responses import get_local_response, LOCAL_PHRASES, normalize_input
 from command_engine import detect_command, execute_command
 
 
 def route_input(user_input):
-    normalized_input = user_input.lower().strip()
+    normalized_input = normalize_input(user_input)
 
-    if normalized_input in ["exit", "quit", "goodbye", "bye"]:
+    if normalized_input in LOCAL_PHRASES["farewell"]:
         return "exit"
 
     local_response = get_local_response(user_input)
