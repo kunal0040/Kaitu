@@ -5,6 +5,7 @@ TARGET_ALIASES = {
     "gpt": "chatgpt",
     "chat gpt": "chatgpt",
     "yt": "youtube",
+    "youttube": "youtube",
     "utube": "youtube",
     "insta": "instagram",
     "ig": "instagram",
@@ -59,6 +60,7 @@ TARGET_ALIASES = {
 COMMAND_ALIASES = {
     # OPEN
     "open": "open",
+    "opn": "open",
     "launch": "open",
     "start": "open",
     "run": "open",

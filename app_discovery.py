@@ -1,5 +1,6 @@
 import subprocess
 import json
+import pygetwindow as gw
 from aliases import normalize_target
 
 
@@ -13,7 +14,7 @@ def get_installed_apps():
 
     try:
         apps = json.loads(result.stdout)
-    
+
     except (json.JSONDecodeError, TypeError):
         return {}
 
@@ -29,11 +30,16 @@ def get_installed_apps():
 
     return installed_apps
 
+
 def get_running_process():
     result = subprocess.run(
-        ["Powershell", "-Command", "Get-Process | Select-Object ProcessName | ConvertTo-Json"],
-    capture_output=True,
-    text=True,
+        [
+            "Powershell",
+            "-Command",
+            "Get-Process | Select-Object ProcessName | ConvertTo-Json",
+        ],
+        capture_output=True,
+        text=True,
     )
     processes = json.loads(result.stdout)
 
@@ -48,14 +54,24 @@ def get_running_process():
 
     return running_processes
 
+
 def close_application(app_name):
     app_name = normalize_target(app_name)
+
+    open_windows = gw.getAllWindows()
+
+    for window in open_windows:
+        window_title = window.title.lower().strip()
+
+        if window_title and app_name in window_title:
+            window.close()
+            return f"Closed {app_name.title()}."
 
     running_processes = get_running_process()
     process_name = running_processes.get(app_name)
 
     if not process_name:
-      
+
         for running_app in running_processes.values():
             if app_name in running_app.lower():
                 process_name = running_app
@@ -63,7 +79,7 @@ def close_application(app_name):
 
     if not process_name:
         return f"I couldn't find a running process for {app_name.title()}."
-    
+
     try:
         result = subprocess.run(
             ["taskkill", "/IM", f"{process_name}.exe", "/F"],
@@ -73,14 +89,8 @@ def close_application(app_name):
 
         if result.returncode == 0:
             return f"Closed {app_name.title()}."
-        
+
         return f"I couldn't close {app_name.title()}"
-    
+
     except Exception as error:
         return f"Failed to close {app_name.title()}. Error: {error}"
-    
-
-
-
-
-    
