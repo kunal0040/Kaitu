@@ -5,6 +5,7 @@ from memory import load_memory, get_conversation_history
 OLLAMA_URL = "http://localhost:11434/api/chat"
 FAST_MODEL = "qwen2.5:3b"
 THINKING_MODEL = "qwen3:4b"
+GENEROUS_MODE = "dolphin3"
 
 memory = load_memory()
 
