@@ -18,6 +18,7 @@ git push origin main
 eagle.epf
 .vscode
 data
+__init__.py
 
 # Autorouter files
 *.pro

@@ -1,6 +1,7 @@
 from brain import ask_assistant
 from local_responses import get_local_response, LOCAL_PHRASES, normalize_input
 from command_engine import detect_command, execute_command
+from memory_manager import handle_memory_command
 
 
 def route_input(user_input):
@@ -13,6 +14,10 @@ def route_input(user_input):
 
     if local_response:
         return local_response
+    
+    memory_response = handle_memory_command(user_input)
+    if memory_response:
+        return memory_response
     
     command_data = detect_command(user_input)
 

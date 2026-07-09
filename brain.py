@@ -1,7 +1,6 @@
 from provider_manager import ask_provider
 from memory import add_message
 
-
 def ask_assistant(prompt):
     normalized_prompt = prompt.lower().strip()
 
