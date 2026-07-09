@@ -41,7 +41,11 @@ def get_running_process():
         capture_output=True,
         text=True,
     )
-    processes = json.loads(result.stdout)
+    
+    try:
+        processes = json.loads(result.stdout)
+    except (json.JSONDecodeError, TypeError):
+        return {}
 
     running_processes = {}
 

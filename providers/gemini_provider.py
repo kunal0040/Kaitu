@@ -4,7 +4,7 @@ from google.genai import types
 from dotenv import load_dotenv
 
 from config import MODEL_NAME, SYSTEM_PROMPT
-from memory import load_memory
+from memory import load_memory, get_conversation_history
 
 load_dotenv()
 
@@ -19,14 +19,30 @@ Known information about the user:
 {memory}
 """
 
-chat = client.chats.create(
-    model=MODEL_NAME,
-    config=types.GenerateContentConfig(
-        system_instruction=SYSTEM_PROMPT + memory_context
-    ),
-)
-
 
 def ask(prompt):
-    response = chat.send_message(prompt)
+
+    history = get_conversation_history()
+    contents = []
+
+    for message in history:
+        role = message["role"]
+
+        if role == "assistant":
+            role = "model"
+        contents.append(
+            types.Content(role=role, parts=[types.Part(text=message["content"])])
+        )
+
+    contents.append(types.Content(role="user", parts=[types.Part(text=prompt)]))
+
+
+    response = client.models.generate_content(
+        model=MODEL_NAME,
+        contents=contents,
+        config=types.GenerateContentConfig(
+            system_instruction=SYSTEM_PROMPT + memory_context
+        )
+    )
+    
     return response.text

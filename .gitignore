@@ -16,6 +16,8 @@ git push origin main
 # on your computer.
 # comment the following line if you want to have your project file included.
 eagle.epf
+.vscode
+data
 
 # Autorouter files
 *.pro

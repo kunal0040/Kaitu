@@ -1,8 +1,8 @@
 import requests
 from config import SYSTEM_PROMPT
-from memory import load_memory
+from memory import load_memory, get_conversation_history
 
-OLLAMA_URL = "http://localhost:11434/api/generate"
+OLLAMA_URL = "http://localhost:11434/api/chat"
 FAST_MODEL = "qwen2.5:3b"
 THINKING_MODEL = "qwen3:4b"
 
@@ -29,17 +29,29 @@ def get_system_prompt(model_name):
     """
 
 
-def ask(prompt, thinking=False):
+def ask(prompt, model_name):
+ 
+    history = get_conversation_history()
 
-    if thinking:
-        model_name = THINKING_MODEL
-    else:
-        model_name = FAST_MODEL
+    messages = [
+        {
+            "role": "system",
+            "content": get_system_prompt(model_name) + memory_context
+        }
+    ]
+
+    messages.extend(history)
+
+    messages.append(
+        {
+            "role": "user",
+            "content": prompt
+        }
+    )
 
     payload = {
         "model": model_name,
-        "system": get_system_prompt(model_name) + memory_context,
-        "prompt": prompt,
+        "messages": messages,
         "stream": False,
     }
 
@@ -47,5 +59,6 @@ def ask(prompt, thinking=False):
     response.raise_for_status()
 
     data = response.json()
-    return data["response"]
+    return data["message"]["content"]
 
+   
