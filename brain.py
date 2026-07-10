@@ -12,10 +12,6 @@ def ask_assistant(prompt):
         mode = "local"
         actual_prompt = prompt[4:].strip()
     
-    elif normalized_prompt.startswith("dolphi "):
-        mode = "dolphin"
-        actual_prompt = prompt[7:].strip()
-
     else:
         mode = "cloud"
         actual_prompt = prompt

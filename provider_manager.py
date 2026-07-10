@@ -7,7 +7,7 @@ def ask_provider(prompt, mode="cloud"):
         # print("[OLLAMA THINKING]")
         return ollama_provider.ask(
             prompt,
-            model_name="qwen3:4b"
+            model_name="dolphin3"
         )
     
     if mode == "local":
@@ -16,14 +16,6 @@ def ask_provider(prompt, mode="cloud"):
             prompt,
             model_name="qwen2.5:3b"
         )
-    
-    if mode == "dolphin":
-        # print("[OLLAMA DOLPHIN]")
-        return ollama_provider.ask(
-            prompt,
-            model_name="dolphin3"
-        )
-
 
     try:
         # print("[GEMINI RESPONSE]")
