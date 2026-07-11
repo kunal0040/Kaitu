@@ -69,7 +69,7 @@ def close_application(app_name):
 
         if window_title and app_name in window_title:
             window.close()
-            return f"Closed {app_name.title()}."
+            return f"{app_name.title()} Closed."
 
     running_processes = get_running_process()
     process_name = running_processes.get(app_name)

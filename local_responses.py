@@ -18,6 +18,7 @@ LOCAL_PHRASES = {
         "sup",
         "hey there",
         "hello there",
+        "how r u",
     ],
     "farewell": [
         "bye",
