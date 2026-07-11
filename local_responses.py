@@ -10,8 +10,6 @@ LOCAL_PHRASES = {
         "hii",
         "hello",
         "hey",
-        "hey kaitu",
-        "hello kaitu",
         "yo",
         "good morning",
         "good afternoon",
@@ -176,12 +174,16 @@ LOCAL_RESPONSES = {
 def normalize_input(user_input):
 
     normalized_input = user_input.lower().strip()
-
     normalized_input = normalized_input.translate(
         str.maketrans("", "", string.punctuation)
     )
-
     normalized_input = " ".join(normalized_input.split())
+
+    assistant_name_lower = ASSISTANT_NAME.lower()
+    words = normalized_input.split()
+    words = [w for w in words if w != assistant_name_lower]
+    normalized_input = " ".join(words)
+
     return normalized_input
 
 

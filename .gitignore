@@ -19,6 +19,7 @@ eagle.epf
 .vscode
 data
 __init__.py
+memory_test.py
 
 # Autorouter files
 *.pro

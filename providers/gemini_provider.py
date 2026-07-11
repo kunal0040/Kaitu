@@ -8,19 +8,19 @@ from memory import load_memory, get_conversation_history
 
 load_dotenv()
 
-memory = load_memory()
-
 api_key = os.getenv("GEMINI_API_KEY")
 
 client = genai.Client(api_key=api_key)
 
-memory_context = f"""
-Known information about the user:
-{memory}
-"""
-
 
 def ask(prompt):
+
+    memory = load_memory()
+
+    memory_context = f"""
+    Known information about the user:
+    {memory}
+    """
 
     history = get_conversation_history()
     contents = []
@@ -36,13 +36,12 @@ def ask(prompt):
 
     contents.append(types.Content(role="user", parts=[types.Part(text=prompt)]))
 
-
     response = client.models.generate_content(
         model=MODEL_NAME,
         contents=contents,
         config=types.GenerateContentConfig(
             system_instruction=SYSTEM_PROMPT + memory_context
-        )
+        ),
     )
-    
+
     return response.text

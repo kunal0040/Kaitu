@@ -21,6 +21,5 @@ def ask_provider(prompt, mode="cloud"):
         # print("[GEMINI RESPONSE]")
         return gemini_provider.ask(prompt)
 
-    except Exception as e:
-        print(f"[Gemini failed, falling back to Ollama: {e}]")
+    except Exception:
         return ollama_provider.ask(prompt, model_name="qwen2.5:3b")

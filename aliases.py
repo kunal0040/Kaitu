@@ -2,8 +2,12 @@ import re
 
 TARGET_ALIASES = {
     # AI
-    "gpt": "chatgpt",
-    "chat gpt": "chatgpt",
+    "gpt": "chatgpt classic",
+    "chat gpt": "chatgpt classic",
+    "chatgpt": "chatgpt classic",
+    "chrome": "google chrome",
+    "edge": "microsoft edge",
+    "edge": "msedge",
     "yt": "youtube",
     "youttube": "youtube",
     "utube": "youtube",

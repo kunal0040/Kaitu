@@ -9,13 +9,6 @@ FAST_MODEL = "qwen2.5:3b"
 THINKING_MODEL = "dolphin3"
 MEMORY_MODEL = "phi4-mini"
 
-memory = load_memory()
-
-memory_context = f"""
-Known information about the user:
-{memory}
-"""
-
 
 def get_system_prompt(model_name):
     return SYSTEM_PROMPT + f"""
@@ -33,6 +26,13 @@ def get_system_prompt(model_name):
 
 
 def ask(prompt, model_name):
+
+    memory = load_memory()
+
+    memory_context = f"""
+    Known information about the user:
+    {memory}
+    """
 
     history = get_conversation_history()
 
@@ -156,179 +156,3 @@ def analyze_memory(new_fact, existing_facts, model_name=MEMORY_MODEL):
     return result
 
 
-if __name__ == "__main__":
-
-    tests = [
-        # ==================== NEW ====================
-        ("My mother's name is Pooja", ["My name is Kunal Bhargav"], "new"),
-        ("I use VS Code for coding", ["I program in Python"], "new"),
-        ("I have completed HTML", ["I am learning Python"], "new"),
-        ("I enjoy story-driven games", ["I play badminton"], "new"),
-        ("My laptop has 16 GB RAM", ["My laptop is an Asus TUF A15"], "new"),
-        ("I am the class representative", ["I study VLSI Engineering"], "new"),
-        ("I want to build a voice assistant", ["I built a banking system"], "new"),
-        ("I usually code after midnight", ["I prefer studying at night"], "new"),
-        ("I have played Red Dead Redemption 2", ["I play God of War"], "new"),
-        ("I am interested in GATE preparation", ["My CGPA is 7.85"], "new"),
-        # ================= DUPLICATE =================
-        ("Python is a language I program in", ["I program in Python"], "duplicate"),
-        (
-            "I am pursuing a VLSI Engineering degree",
-            ["I study VLSI Engineering"],
-            "duplicate",
-        ),
-        (
-            "My notebook computer is an Asus TUF A15",
-            ["My laptop is an Asus TUF A15"],
-            "duplicate",
-        ),
-        ("I like to play badminton", ["I enjoy playing badminton"], "duplicate"),
-        (
-            "I prefer doing my studies during nighttime",
-            ["I prefer studying at night"],
-            "duplicate",
-        ),
-        ("My CGPA currently stands at 7.85", ["My current CGPA is 7.85"], "duplicate"),
-        (
-            "I am currently a fourth-semester student",
-            ["I am in Semester 4"],
-            "duplicate",
-        ),
-        ("Kaitu was created by me", ["I created Kaitu"], "duplicate"),
-        ("I use an Oppo K13 5G as my phone", ["My phone is Oppo K13 5G"], "duplicate"),
-        (
-            "Shanvi is my sibling and she is my sister",
-            ["Shanvi is my sister"],
-            "duplicate",
-        ),
-        # =================== UPDATE ==================
-        ("My CGPA is now 8.3", ["My CGPA is 7.85"], "update"),
-        ("I have moved to Delhi", ["I currently live in Patna"], "update"),
-        ("I am now in Semester 5", ["I am in Semester 4"], "update"),
-        (
-            "I switched my primary phone to a Pixel 9",
-            ["My current phone is Oppo K13 5G"],
-            "update",
-        ),
-        (
-            "I have finished building the Banking System",
-            ["I am currently building the Banking System"],
-            "update",
-        ),
-        (
-            "I now study from 10 PM to 2 AM",
-            ["I usually study from 9 PM to 12 AM"],
-            "update",
-        ),
-        ("I stopped preparing for GATE", ["I am preparing for GATE"], "update"),
-        (
-            "I am now learning C++ instead of Python",
-            ["I am currently focusing on learning Python"],
-            "update",
-        ),
-        ("My current SGPA is 8.5", ["My current SGPA is 8.0"], "update"),
-        (
-            "I changed Kaitu's thinking model to Dolphin3",
-            ["Kaitu's thinking model is Qwen3 4B"],
-            "update",
-        ),
-        # ================= CONFLICT ==================
-        ("I do not know Python", ["I program in Python"], "conflict"),
-        ("I have never played badminton", ["I regularly play badminton"], "conflict"),
-        ("I do not have a sister", ["Shanvi is my sister"], "conflict"),
-        ("I did not create Kaitu", ["I created Kaitu"], "conflict"),
-        (
-            "I have never studied VLSI Engineering",
-            ["I study VLSI Engineering"],
-            "conflict",
-        ),
-        ("I own no computer", ["I own an Asus TUF A15 laptop"], "conflict"),
-        ("I hate story-driven games", ["I love story-driven games"], "conflict"),
-        ("I never study at night", ["I prefer studying at night"], "conflict"),
-        ("My name is not Kunal", ["My name is Kunal"], "conflict"),
-        ("I have never used VS Code", ["I use VS Code for coding"], "conflict"),
-        # ================= UNCERTAIN =================
-        ("Things are different now", ["I study VLSI Engineering"], "uncertain"),
-        ("I changed it", ["My phone is Oppo K13 5G"], "uncertain"),
-        ("Maybe I don't like it anymore", ["I enjoy badminton"], "uncertain"),
-        ("My situation has changed", ["I live in Patna"], "uncertain"),
-        ("That is no longer true", ["I am learning Python"], "uncertain"),
-        # =============== MULTI-MEMORY ===============
-        (
-            "I built a Flask website",
-            [
-                "I program in Python",
-                "I know HTML and CSS",
-                "I play badminton",
-                "I study VLSI Engineering",
-            ],
-            "new",
-        ),
-        (
-            "I am pursuing VLSI Engineering",
-            [
-                "I program in Python",
-                "I study VLSI Engineering",
-                "I own an Asus TUF A15",
-                "I play badminton",
-            ],
-            "duplicate",
-        ),
-        (
-            "My CGPA has increased to 8.2",
-            [
-                "I study VLSI Engineering",
-                "My CGPA is 7.85",
-                "I am in Semester 4",
-                "I play badminton",
-            ],
-            "update",
-        ),
-        (
-            "I have never learned Python",
-            [
-                "I study VLSI Engineering",
-                "I program in Python",
-                "I know HTML and CSS",
-                "I play badminton",
-            ],
-            "conflict",
-        ),
-        (
-            "I recently changed that",
-            [
-                "My CGPA is 7.85",
-                "My phone is Oppo K13 5G",
-                "I am in Semester 4",
-                "I study VLSI Engineering",
-            ],
-            "uncertain",
-        ),
-    ]
-    correct = 0
-
-    start_time = time.time()
-
-    for new_fact, existing_facts, expected in tests:
-        result = analyze_memory(
-            new_fact,
-            existing_facts,
-        )
-
-        action = result["relationship"]
-
-        passed = action == expected
-
-        if passed:
-            correct += 1
-
-        print(
-            f"{'PASS' if passed else 'FAIL'} | "
-            f"Expected: {expected} | "
-            f"Got: {action}"
-        )
-
-    print(f"\nScore: {correct}/{len(tests)}")
-
-    total_time = time.time() - start_time
-    print(f"Total time: {total_time:.2f}s")

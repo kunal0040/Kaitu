@@ -55,6 +55,24 @@ def get_memory_context():
     {memory}
     """
 
+def forget_fact(category, fact):
+    memory = load_memory()
+
+    if category not in memory:
+        return False
+    
+    if fact not in memory[category]:
+        return False
+    
+    memory[category].remove(fact)
+
+    if not memory[category]:
+        del memory[category]
+
+    save_memory(memory)
+
+    return True
+
 
 conversation_history = []
 
