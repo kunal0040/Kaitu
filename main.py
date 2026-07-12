@@ -1,27 +1,23 @@
 from router import route_input
 from config import ASSISTANT_NAME, USER_NAME
-from audio.speech_input import load_model, listen
-from audio.speech_output import speak
-
-model = load_model()
+from local_responses import normalize_input
+from audio import voice_mode, TALK_COMMAND
 
 
 def main():
-    print(f"{ASSISTANT_NAME} is Online...")
+    print(f"{ASSISTANT_NAME} is Online...\n")
 
     while True:
-        try:
-            text = listen(model)
-            print(f"You: {text}")
-            user_input = text.strip()
+        user_input = input("You: ")
 
-        except Exception:
-            error_message = f"I'm unable to recognise your command, {USER_NAME}."
-            print(error_message)
-            speak(error_message)
-            continue
-            
         if not user_input:
+            continue
+
+        if normalize_input(user_input) in TALK_COMMAND:
+            result = voice_mode()
+
+            if result == "exit":
+                break
             continue
 
         try:
@@ -29,11 +25,9 @@ def main():
 
             if response == "exit":
                 print(f"{ASSISTANT_NAME}: Goodbye! Have a great day {USER_NAME}!")
-                speak("Goodbye! Have a great day!")
                 break
 
             print(f"{ASSISTANT_NAME}: {response}")
-            speak(response)
 
         except Exception as error:
             print(f"[Something Went Wrong]: {error}")

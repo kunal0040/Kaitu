@@ -11,7 +11,7 @@ INSTALLED_APPS = get_installed_apps()
 
 def open_application(app_name):
     app_name = app_name.lower().strip()
-    
+
     web_url = WEB_SITES.get(app_name)
     app_id = INSTALLED_APPS.get(app_name)
 
@@ -32,13 +32,13 @@ def open_application(app_name):
 
 
 def search_web(search_query):
-    
+
     encoded_query = quote_plus(search_query)
     search_url = f"https://www.google.com/search?q={encoded_query}"
 
     webbrowser.open(search_url)
     return f"Searching {search_query.title()}..."
-    
+
 
 def detect_command(user_input):
     normalized_input = user_input.lower().strip()
@@ -54,40 +54,31 @@ def detect_command(user_input):
     if not command:
         return None
 
-
     if command == "open":
         target = normalize_target(target)
-        return {
-            "command": "open_application",
-            "target": target
-        }
-    
+        return {"command": "open_application", "target": target}
+
     elif command == "close":
         target = normalize_target(target)
-        return {
-            "command": "close_application",
-            "target": target
-        }
+        return {"command": "close_application", "target": target}
 
     elif command == "search":
-        return {
-            "command": "search_web",
-            "target": target
-        }
+        return {"command": "search_web", "target": target}
 
     return None
 
+
 def execute_command(command_data):
-    
+
     command = command_data["command"]
     target = command_data["target"]
 
     if command == "open_application":
         return open_application(target)
-    
+
     elif command == "search_web":
         return search_web(target)
-    
+
     elif command == "close_application":
         return close_application(target)
 

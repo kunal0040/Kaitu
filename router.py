@@ -14,11 +14,11 @@ def route_input(user_input):
 
     if local_response:
         return local_response
-    
+
     memory_response = handle_memory_command(user_input)
     if memory_response:
         return memory_response
-    
+
     command_data = detect_command(user_input)
 
     if command_data:

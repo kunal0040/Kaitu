@@ -1,5 +1,5 @@
 from memory import remember_fact, get_memory, load_memory, forget_fact, save_memory
-from providers.ollama_provider import analyze_memory
+from providers import analyze_memory
 from config import USER_NAME
 
 from memory import load_memory, save_memory, remember_fact
@@ -180,10 +180,7 @@ def remember(fact):
     for facts in memory.values():
         existing_facts.extend(facts)
 
-    result = analyze_memory(
-        fact,
-        existing_facts
-    )
+    result = analyze_memory(fact, existing_facts)
 
     relationship = result["relationship"]
     matched_fact = result["matched_fact"]
@@ -212,22 +209,15 @@ def remember(fact):
 
     if relationship == "update":
         if has_explicit_update_marker(fact):
-            return handle_memory_update(
-                fact,
-                matched_fact
-            )
+            return handle_memory_update(fact, matched_fact)
 
         return create_pending_memory_action(
-            action="update",
-            new_fact=fact,
-            matched_fact=matched_fact
+            action="update", new_fact=fact, matched_fact=matched_fact
         )
 
     if relationship == "conflict":
         return create_pending_memory_action(
-            action="conflict",
-            new_fact=fact,
-            matched_fact=matched_fact
+            action="conflict", new_fact=fact, matched_fact=matched_fact
         )
 
     if relationship == "uncertain":
@@ -237,16 +227,11 @@ def remember(fact):
         )
 
     if relationship != "new":
-        return (
-            f"I couldn't safely classify that memory, {USER_NAME}."
-        )
+        return f"I couldn't safely classify that memory, {USER_NAME}."
 
     category = detect_memory_category(fact)
 
-    remembered = remember_fact(
-        category,
-        fact
-    )
+    remembered = remember_fact(category, fact)
 
     if not remembered:
         return f"I couldn't save that memory, {USER_NAME}."
@@ -254,6 +239,7 @@ def remember(fact):
     display_fact = fact_to_user_perspective(fact)
 
     return f"I'll remember that {display_fact}, {USER_NAME}!"
+
 
 def show_memory():
     memory = get_memory()
@@ -408,7 +394,7 @@ def fact_to_user_perspective(fact):
 
     for old, new in replacements:
         if normalized.startswith(old):
-            return new + fact[len(old):]
+            return new + fact[len(old) :]
 
     return fact
 

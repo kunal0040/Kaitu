@@ -2,6 +2,7 @@ from provider_manager import ask_provider
 from memory import add_message
 from memory_manager import handle_pending_memory_action
 
+
 def ask_assistant(prompt):
 
     pending_response = handle_pending_memory_action(prompt)
@@ -18,19 +19,16 @@ def ask_assistant(prompt):
     elif normalized_prompt.startswith("ola "):
         mode = "local"
         actual_prompt = prompt[4:].strip()
-    
+
     elif normalized_prompt.startswith("search on web "):
         mode = "cloud"
         actual_prompt = prompt[14:].strip()
-    
+
     else:
         mode = "cloud"
         actual_prompt = prompt
 
-    response = ask_provider(
-        actual_prompt,
-        mode=mode
-    )
+    response = ask_provider(actual_prompt, mode=mode)
 
     add_message("user", actual_prompt)
     add_message("assistant", response)

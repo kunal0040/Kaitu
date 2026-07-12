@@ -19,7 +19,7 @@ eagle.epf
 .vscode
 data
 voices
-memory_test.py
+tests
 
 # Autorouter files
 *.pro

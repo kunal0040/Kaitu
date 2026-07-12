@@ -8,7 +8,6 @@ from config import WHISPER_DEVICE, WHISPER_MODEL
 def load_model():
 
     try:
-        print("Loading Whisper on GPU...")
         model = WhisperModel(
             WHISPER_MODEL, device=WHISPER_DEVICE, compute_type="float16"
         )

@@ -6,7 +6,7 @@ from memory import load_memory, get_conversation_history
 
 OLLAMA_URL = "http://localhost:11434/api/chat"
 FAST_MODEL = "qwen2.5:3b"
-THINKING_MODEL = "dolphin3"
+THINKING_MODEL = "phi4-mini"
 MEMORY_MODEL = "phi4-mini"
 
 
@@ -41,7 +41,6 @@ def ask(prompt, model_name):
     ]
 
     messages.extend(history)
-
     messages.append({"role": "user", "content": prompt})
 
     payload = {
@@ -154,5 +153,3 @@ def analyze_memory(new_fact, existing_facts, model_name=MEMORY_MODEL):
 
     result = json.loads(data["response"])
     return result
-
-

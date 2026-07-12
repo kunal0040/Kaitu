@@ -12,28 +12,28 @@ PRONUNCIATION_MAP = {
     "Kunal": "Koo-naaal",
 }
 
+
 def load_voice():
     global _voice
 
     if _voice is None:
-        print("Loading Assistant Voice...")
         _voice = PiperVoice.load(ASSISTANT_VOICE)
 
     return _voice
 
 
-def preprocess_texts(text):
+def preprocess_text(text):
 
     for word, replacement in PRONUNCIATION_MAP.items():
         text = text.replace(word, replacement)
-    
+
     return text
 
 
 def speak(text):
 
     voice = load_voice()
-    text = preprocess_texts(text)
+    text = preprocess_text(text)
 
     with wave.open(TEMP_AUDIO, "wb") as wav_file:
         voice.synthesize_wav(text, wav_file, syn_config=config)
@@ -41,6 +41,7 @@ def speak(text):
     winsound.PlaySound(TEMP_AUDIO, winsound.SND_FILENAME)
 
     os.remove(TEMP_AUDIO)
+
 
 if __name__ == "__main__":
     speak("Hello Kunal!!!, How are you")
