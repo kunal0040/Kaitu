@@ -18,7 +18,6 @@ git push origin main
 eagle.epf
 .vscode
 data
-__init__.py
 memory_test.py
 
 # Autorouter files

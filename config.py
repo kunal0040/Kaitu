@@ -4,6 +4,7 @@ MODEL_NAME = "gemini-3.5-flash"
 ASSISTANT_VERSION = "0a1"
 WHISPER_MODEL = "small"
 WHISPER_DEVICE = "cuda"
+PIPER_MODEL = "audio/en_US-amy-medium.onnx"
 
 SYSTEM_PROMPT = f"""
 You are {ASSISTANT_NAME}, a personal AI assistant created by {USER_NAME}.
