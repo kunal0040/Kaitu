@@ -1,12 +1,12 @@
 import pyttsx3
-import speech_recognition as sr
+from audio.speech_input import load_model, listen
 from router import route_input
 from config import ASSISTANT_NAME, USER_NAME
 
-r = sr.Recognizer()
+model = load_model()
+engine = pyttsx3.init()
 
 def speak(text):
-    engine = pyttsx3.init()
     engine.setProperty('rate', 165)
     voices = engine.getProperty('voices')
     if len(voices) > 1:
@@ -20,17 +20,12 @@ def main():
 
     while True:
         try:
-            with sr.Microphone() as source:
-                print("\nListening...")
-                r.adjust_for_ambient_noise(source, duration=0.5)
-                audio = r.listen(source)
-                
-            text = r.recognize_google(audio)
+            text = listen(model)
             print(f"You: {text}")
             user_input = text.strip()
 
-        except sr.UnknownValueError:
-            error_message = f"Sorry, I could not understand the audio. Please try again {USER_NAME}."
+        except Exception:
+            error_message = f"I'm unable to recognise your command, {USER_NAME}."
             print(error_message)
             speak(error_message)
             continue
