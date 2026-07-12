@@ -1,19 +1,10 @@
-import pyttsx3
-from audio.speech_input import load_model, listen
 from router import route_input
 from config import ASSISTANT_NAME, USER_NAME
+from audio.speech_input import load_model, listen
+from audio.speech_output import speak
 
 model = load_model()
-engine = pyttsx3.init()
 
-def speak(text):
-    engine.setProperty('rate', 165)
-    voices = engine.getProperty('voices')
-    if len(voices) > 1:
-        engine.setProperty('voice', voices[1].id)
-    engine.say(text)
-    engine.runAndWait()
-    engine.stop()
 
 def main():
     print(f"{ASSISTANT_NAME} is Online...")

@@ -18,6 +18,7 @@ git push origin main
 eagle.epf
 .vscode
 data
+voices
 memory_test.py
 
 # Autorouter files
@@ -28,7 +29,6 @@ memory_test.py
 
 __pycache__/
 *.pyc
-memory.json
 app_registry.py
 
 # CAM files
