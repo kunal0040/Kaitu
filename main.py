@@ -1,23 +1,25 @@
 from router import route_input
 from config import ASSISTANT_NAME, USER_NAME
 from local_responses import normalize_input
-from audio import voice_mode, TALK_COMMAND
+from audio import handle_voice_mode
 
 
 def main():
-    print(f"{ASSISTANT_NAME} is Online...\n")
+    print(f"{ASSISTANT_NAME} is Online...")
 
     while True:
-        user_input = input("You: ")
+        user_input = input("\nYou: ")
 
-        if not user_input:
+        if not user_input.strip():
             continue
 
-        if normalize_input(user_input) in TALK_COMMAND:
-            result = voice_mode()
+        command = normalize_input(user_input)
+        result = handle_voice_mode(command)
 
-            if result == "exit":
-                break
+        if result == "exit":
+            break
+
+        if result == "keyboard":
             continue
 
         try:

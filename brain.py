@@ -20,10 +20,6 @@ def ask_assistant(prompt):
         mode = "local"
         actual_prompt = prompt[4:].strip()
 
-    elif normalized_prompt.startswith("search on web "):
-        mode = "cloud"
-        actual_prompt = prompt[14:].strip()
-
     else:
         mode = "cloud"
         actual_prompt = prompt
