@@ -119,6 +119,27 @@ def analyze_memory(new_fact, existing_facts, model_name=MEMORY_MODEL):
         "relationship": "new|duplicate|update|conflict|uncertain",
         "matched_fact": "Exact text of the relevant existing memory, or null if relationship is 'new' or no single match exists."
     }}
+
+    IMPORTANT:
+
+        Coding, studying and other educational/cultural/art/skills are different activities. 
+        Laptop, notebook, computer are synonyms.
+        "Fourth semester student" and "Semester 4" are identical facts. Similar numbers like (0 to 9 or till 100) should be equivalent to the word form of it (first to ninth or till hunderedth).
+        Python, C/C++, Java, etc are coding languages they can be learned. While Vs Code, Pycharm, Antigravity are tools for coding/programming via coding languages. Example like "I use VS code for coding" is different from "I program in (coding languages)"
+        Sentences containing
+        "maybe",
+        "perhaps",
+        "might",
+        "changed it",
+        "that is no longer true"
+        without explicit context are UNCERTAIN.
+
+        A direct negation
+        "I do not know Python"
+        contradicts
+        "I know Python"
+        and is CONFLICT,
+        not UPDATE.
     """
 
     MEMORY_SCHEMA = {
