@@ -4,6 +4,10 @@ MODEL_NAME = "gemini-3.5-flash"
 ASSISTANT_VERSION = "0a1"
 WHISPER_MODEL = "small"
 WHISPER_DEVICE = "cuda"
+OLLAMA_URL = "http://localhost:11434/api/chat"
+FAST_MODEL = "qwen2.5:3b"
+THINKING_MODEL = "phi4-mini"
+MEMORY_MODEL = "phi4-mini"
 PIPER_VOICES = {
     "male": "audio/voices/en_US-norman-medium.onnx",
     "female": "audio/voices/en_US-libritts_r-medium.onnx",

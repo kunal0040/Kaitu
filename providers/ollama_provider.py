@@ -1,13 +1,7 @@
 import requests
 import json
-import time
-from config import SYSTEM_PROMPT
+from config import SYSTEM_PROMPT, OLLAMA_URL, MEMORY_MODEL
 from memory import load_memory, get_conversation_history
-
-OLLAMA_URL = "http://localhost:11434/api/chat"
-FAST_MODEL = "qwen2.5:3b"
-THINKING_MODEL = "phi4-mini"
-MEMORY_MODEL = "phi4-mini"
 
 
 def get_system_prompt(model_name):

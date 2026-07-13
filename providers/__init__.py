@@ -1,9 +1,3 @@
-from .gemini_provider import ask
-from .ollama_provider import (
-    get_system_prompt,
-    ask,
-    analyze_memory,
-    FAST_MODEL,
-    THINKING_MODEL,
-    MEMORY_MODEL,
-)
+from .gemini_provider import ask as ask_gemini
+from .ollama_provider import ask as ask_ollama
+from .ollama_provider import get_system_prompt, analyze_memory
