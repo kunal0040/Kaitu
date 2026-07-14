@@ -12,6 +12,9 @@ def ask_assistant(prompt):
 
     normalized_prompt = prompt.lower().strip()
 
+    mode = "cloud"
+    actual_prompt = prompt
+
     if normalized_prompt.startswith("think "):
         mode = "thinking"
         actual_prompt = prompt[6:].strip()
@@ -19,10 +22,6 @@ def ask_assistant(prompt):
     elif normalized_prompt.startswith("ola "):
         mode = "local"
         actual_prompt = prompt[4:].strip()
-
-    else:
-        mode = "cloud"
-        actual_prompt = prompt
 
     response = ask_provider(actual_prompt, mode=mode)
 

@@ -9,6 +9,7 @@ TWO_WAY_VOICE_COMMAND = {
     "voice chat",
     "full voice mode",
     "lets call",
+    "lets talk",
     "lets converse",
     "talk with me",
     "speak with me",
@@ -84,10 +85,15 @@ def two_way_voice_mode():
             user_input = listen(model)
             print(f"You: {user_input}")
 
-            if normalize_input(user_input) in RETURN_TO_TEXT_COMMAND:
-                speak(f"Had a nice convo with you {USER_NAME}!")
+            command = normalize_input(user_input)
+
+            if command in RETURN_TO_TEXT_COMMAND:
                 print("Returning to keyboard mode.")
                 return "keyboard"
+
+            next_mode = handle_voice_mode(command)
+            if next_mode:
+                return next_mode
 
             response = route_input(user_input)
 
@@ -119,9 +125,15 @@ def text_to_speech_mode():
             if not user_input.strip():
                 continue
 
-            if normalize_input(user_input) in RETURN_TO_TEXT_COMMAND:
-                print("Returning to keyboard mode.\n")
+            command = normalize_input(user_input)
+
+            if command in RETURN_TO_TEXT_COMMAND:
+                print("\nReturning to keyboard mode.\n")
                 return "keyboard"
+
+            next_mode = handle_voice_mode(command)
+            if next_mode:
+                return next_mode
 
             response = route_input(user_input)
 
@@ -153,9 +165,18 @@ def voice_input_mode():
             user_input = listen(model)
             print(f"You: {user_input}")
 
-            if normalize_input(user_input) in RETURN_TO_TEXT_COMMAND:
-                print("Returning to keyboard mode.")
+            if not user_input.strip():
+                continue
+
+            command = normalize_input(user_input)
+
+            if command in RETURN_TO_TEXT_COMMAND:
+                print("Returning to keyboard mode.\n")
                 return "keyboard"
+
+            next_mode = handle_voice_mode(command)
+            if next_mode:
+                return next_mode
 
             response = route_input(user_input)
 
@@ -189,8 +210,28 @@ VOICE_MODES = (
 
 def handle_voice_mode(command):
 
-    for commands, mode in VOICE_MODES:
+    for commands, mode_func in VOICE_MODES:
         if command in commands:
-            return mode()
+            return mode_func
 
     return None
+
+
+def voice_session(initial_mode=two_way_voice_mode):
+
+    current_mode_func = initial_mode
+
+    while True:
+        result = current_mode_func()
+
+        if result == "exit":
+            return "exit"
+
+        if result == "keyboard":
+            return "keyboard"
+
+        if callable(result):
+            current_mode_func = result
+            continue
+
+        raise RuntimeError(f"Unknown voice session result: {result}")

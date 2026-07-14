@@ -1,7 +1,7 @@
 from router import route_input
 from config import ASSISTANT_NAME, USER_NAME
 from local_responses import normalize_input
-from audio import handle_voice_mode
+from audio import handle_voice_mode, voice_session
 
 
 def main():
@@ -14,13 +14,18 @@ def main():
             continue
 
         command = normalize_input(user_input)
-        result = handle_voice_mode(command)
 
-        if result == "exit":
-            break
+        mode_func = handle_voice_mode(command)
 
-        if result == "keyboard":
-            continue
+        if mode_func:
+
+            result = voice_session(initial_mode=mode_func)
+            
+            if result == "exit":
+                break
+            if result == "keyboard":
+                print("\nKeyboard mode restored.")
+                continue
 
         try:
             response = route_input(user_input)
