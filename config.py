@@ -5,9 +5,9 @@ ASSISTANT_VERSION = "0a1"
 WHISPER_MODEL = "small"
 WHISPER_DEVICE = "cuda"
 OLLAMA_URL = "http://localhost:11434/api/chat"
-FAST_MODEL = "qwen2.5:3b"
+FAST_MODEL = "phi4-mini"
 TALK_MODEL = "phi4-mini"
-MEMORY_MODEL = "phi4-mini"
+MEMORY_MODEL = "huihui_ai/qwen3-abliterated:8b"
 PIPER_VOICES = {
     "male": "audio/voices/en_US-norman-medium.onnx",
     "female": "audio/voices/en_US-libritts_r-medium.onnx",
