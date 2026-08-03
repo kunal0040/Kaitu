@@ -1,34 +1,24 @@
 import os
 import wave
 import winsound
+from .voice_processing import preprocess_text, get_current_voice
 from piper import PiperVoice, SynthesisConfig
-from config import PIPER_VOICES
 
 TEMP_AUDIO = "_temp_speech.wav"
 _voice = None
+_loaded_voice_path = None
 config = SynthesisConfig(length_scale=1.0)
-ASSISTANT_VOICE = PIPER_VOICES["female"]
-PRONUNCIATION_MAP = {
-    "Kunal": "Koo-naaal",
-}
 
 
 def load_voice():
-    global _voice
+    global _voice, _loaded_voice_path
+    current_path = get_current_voice()
 
-    if _voice is None:
-        _voice = PiperVoice.load(ASSISTANT_VOICE)
+    if _voice is None or _loaded_voice_path != current_path:
+        _voice = PiperVoice.load(current_path)
+        _loaded_voice_path = current_path
 
     return _voice
-
-
-def preprocess_text(text):
-
-    for word, replacement in PRONUNCIATION_MAP.items():
-        text = text.replace(word, replacement)
-
-    return text
-
 
 def speak(text):
 
@@ -42,6 +32,3 @@ def speak(text):
 
     os.remove(TEMP_AUDIO)
 
-
-if __name__ == "__main__":
-    speak("Hello Kunal!!!, How are you")
