@@ -1,5 +1,7 @@
 from router import route_input
-from audio import listen, speak, load_model
+from .speech_input import listen, load_model
+from .speech_output import speak
+from .voice_processing import voice_choices
 from local_responses import normalize_input
 from config import ASSISTANT_NAME, USER_NAME
 
@@ -72,12 +74,22 @@ RETURN_TO_TEXT_COMMAND = {
 }
 
 
-model = load_model()
+_model = None
+
+
+def get_model():
+    global _model
+
+    if _model is None:
+        _model = load_model()
+
+    return _model
 
 
 def two_way_voice_mode():
 
     print("\nVoice mode activated.\n")
+    model = get_model()
 
     while True:
 
@@ -94,6 +106,11 @@ def two_way_voice_mode():
             next_mode = handle_voice_mode(command)
             if next_mode:
                 return next_mode
+
+            new_voice = voice_choices(user_input)
+            if new_voice:
+                speak("Voice updated.")
+                continue
 
             response = route_input(user_input)
 
@@ -135,6 +152,12 @@ def text_to_speech_mode():
             if next_mode:
                 return next_mode
 
+            new_voice = voice_choices(user_input)
+            if new_voice:
+                speak("Voice updated.")
+                continue
+            
+
             response = route_input(user_input)
 
             if response == "exit":
@@ -158,6 +181,7 @@ def text_to_speech_mode():
 def voice_input_mode():
 
     print("\nVoice input mode activated.\nSpeak naturally!\n")
+    model = get_model()
 
     while True:
 
@@ -177,6 +201,12 @@ def voice_input_mode():
             next_mode = handle_voice_mode(command)
             if next_mode:
                 return next_mode
+
+            new_voice = voice_choices(user_input)
+            if new_voice:
+                speak("Voice updated.")
+                continue
+            
 
             response = route_input(user_input)
 
