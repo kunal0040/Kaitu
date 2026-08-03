@@ -43,7 +43,7 @@ def ask(prompt, model_name):
         "stream": False,
     }
 
-    response = requests.post(OLLAMA_URL, json=payload, timeout=300)
+    response = requests.post(OLLAMA_URL, json=payload)
     response.raise_for_status()
 
     data = response.json()
@@ -147,7 +147,7 @@ def analyze_memory(new_fact, existing_facts, model_name=MEMORY_MODEL):
         "options": {"temperature": 0, "seed": 42},
     }
 
-    response = requests.post("http://localhost:11434/api/generate", json=payload, timeout=300)
+    response = requests.post("http://localhost:11434/api/generate", json=payload)
     response.raise_for_status()
     data = response.json()
 

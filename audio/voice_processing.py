@@ -42,6 +42,7 @@ SWITCH_TO_MALE_COMMAND = {
 TOGGLE_VOICE_GENDER_COMMAND = {
     "change voice gender",
     "change gender",
+    "change voice",
     "change your gender",
     "switch voice gender",
     "use a different voice",
