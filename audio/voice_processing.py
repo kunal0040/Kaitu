@@ -61,9 +61,8 @@ PRONUNCIATION_MAP = {
 
 def preprocess_text(text):
     text = text.replace("\n", ". ")
-    text = re.sub(r'\(.*?\)', '', text)
     text = re.sub(r'\[.*?\]', '', text)
-    text = re.sub(r'[*_~`#]', '', text)
+    text = re.sub(r'[*_~`#-]', '', text)
     text = re.sub(r'http\S+', '', text)
     text = re.sub(r'\s+', ' ', text).strip()
     text = re.sub(r"\[(.*?)\]\((.*?)\)", r"\1", text)

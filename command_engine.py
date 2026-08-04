@@ -6,6 +6,7 @@ from app_registry import WEB_SITES
 from app_discovery import get_installed_apps, close_application
 from aliases import COMMAND_ALIASES, normalize_target
 
+
 INSTALLED_APPS = get_installed_apps()
 
 
@@ -65,6 +66,12 @@ def detect_command(user_input):
     elif command == "search":
         return {"command": "search_web", "target": target}
 
+    elif command == "read":
+        return {
+            "command": "run_reader",
+            "target": target
+        }
+
     return None
 
 
@@ -81,5 +88,9 @@ def execute_command(command_data):
 
     elif command == "close_application":
         return close_application(target)
+
+    elif command == "run_reader":
+        from skills.reader import execute_reading as read
+        return read(target)
 
     return None

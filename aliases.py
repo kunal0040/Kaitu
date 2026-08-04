@@ -85,6 +85,11 @@ COMMAND_ALIASES = {
     "terminate": "close",
     "kill": "close",
     "shut": "close",
+    # READ
+    "read": "read",
+    "narrate": "read",
+    "dictate": "read",
+    "speak this": "read",
 }
 
 
