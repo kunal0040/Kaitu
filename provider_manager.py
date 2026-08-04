@@ -1,5 +1,5 @@
 from providers import ask_gemini, ask_ollama
-from config import FAST_MODEL, TALK_MODEL, MEMORY_MODEL
+from config import TALK_MODEL, MEMORY_MODEL
 
 
 def ask_provider(prompt, mode="cloud"):
@@ -17,8 +17,8 @@ def ask_provider(prompt, mode="cloud"):
 
     if mode == "local":
         print("[OLLAMA RESPONSE]")
-        return ask_ollama(prompt, model_name=TALK_MODEL)
+        return ask_ollama(prompt, model_name=MEMORY_MODEL)
 
     print("[OLLAMA RESPONSE]")
-    return ask_ollama(prompt, model_name=FAST_MODEL)
+    return ask_ollama(prompt, model_name=TALK_MODEL)
         
