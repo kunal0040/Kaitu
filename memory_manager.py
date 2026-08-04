@@ -122,7 +122,7 @@ def create_pending_memory_action(action, new_fact, matched_fact):
             f"Should I replace it with '{new_fact}'?"
         )
 
-    if action == "conflict":
+    if action == "contradiction":
         old_display = fact_to_user_perspective(matched_fact)
         new_display = fact_to_user_perspective(new_fact)
 
@@ -153,7 +153,7 @@ def handle_pending_memory_action(user_input):
 
         pending_memory_action = None
 
-        if action in {"update", "conflict"}:
+        if action in {"update", "contradiction"}:
             return handle_memory_update(new_fact, matched_fact)
 
     if normalized_input in NO_RESPONSES:
@@ -201,7 +201,7 @@ def remember(fact):
     if relationship == "duplicate":
         return f"I already know that {USER_NAME}!"
 
-    if relationship in {"update", "conflict"} and matched_fact is None:
+    if relationship in {"update", "contradiction"} and matched_fact is None:
         return (
             f"I recognized this as a memory {relationship}, "
             f"but couldn't safely identify the old memory, {USER_NAME}."
@@ -215,9 +215,9 @@ def remember(fact):
             action="update", new_fact=fact, matched_fact=matched_fact
         )
 
-    if relationship == "conflict":
+    if relationship == "contradiction":
         return create_pending_memory_action(
-            action="conflict", new_fact=fact, matched_fact=matched_fact
+            action="contradiction", new_fact=fact, matched_fact=matched_fact
         )
 
     if relationship == "uncertain":

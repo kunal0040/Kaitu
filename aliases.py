@@ -94,7 +94,6 @@ COMMAND_ALIASES = {
 
 
 def normalize_target(target):
-    """Normalize raw target text so aliases and process matching work reliably."""
 
     normalized = target.lower().strip()
     normalized = re.sub(r"[^a-z0-9\s]+", " ", normalized)

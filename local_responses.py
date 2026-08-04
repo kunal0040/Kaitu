@@ -171,25 +171,44 @@ LOCAL_RESPONSES = {
     ],
 }
 
+WAKE_WORDS = (
+    f"{ASSISTANT_NAME.lower()}",
+    f"hey {ASSISTANT_NAME.lower()}",
+    f"hi {ASSISTANT_NAME.lower()}",
+    f"hello {ASSISTANT_NAME.lower()}",
+    f"ok {ASSISTANT_NAME.lower()}",
+    f"okay {ASSISTANT_NAME.lower()}",
+    f"yo {ASSISTANT_NAME.lower()}",
+    f"please {ASSISTANT_NAME.lower()}",
+    f"listen {ASSISTANT_NAME.lower()}"
+)
+
 
 def normalize_input(user_input):
 
     normalized_input = user_input.lower().strip()
+
     normalized_input = normalized_input.translate(
         str.maketrans("", "", string.punctuation)
     )
-    normalized_input = " ".join(normalized_input.split())
 
-    assistant_name_lower = ASSISTANT_NAME.lower()
-    words = normalized_input.split()
-    words = [w for w in words if w != assistant_name_lower]
-    normalized_input = " ".join(words)
+    normalized_input = " ".join(normalized_input.split())
 
     return normalized_input
 
 
+def remove_wake_word(user_input):
+
+    text = normalize_input(user_input)
+
+    for wake_word in WAKE_WORDS:
+        if text.startswith(wake_word):
+            return text[len(wake_word) :].strip()
+
+    return text
+
+
 def get_local_response(user_input):
-    """Return a local response if the input matches a known phrase."""
 
     normalized_input = normalize_input(user_input)
 

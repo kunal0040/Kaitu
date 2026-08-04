@@ -132,7 +132,7 @@ def analyze_memory(new_fact, existing_facts, model_name=MEMORY_MODEL):
         "properties": {
             "relationship": {
                 "type": "string",
-                "enum": ["new", "duplicate", "update", "conflict", "uncertain"],
+                "enum": ["new", "duplicate", "update", "contradiction", "uncertain"],
             },
             "matched_fact": {"type": ["string", "null"]},
         },
