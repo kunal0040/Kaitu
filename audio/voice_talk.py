@@ -14,6 +14,7 @@ TWO_WAY_VOICE_COMMAND = {
     "lets talk",
     "lets converse",
     "talk with me",
+    "talk to me",
     "speak with me",
     "enable two way audio",
     "start a voice call",

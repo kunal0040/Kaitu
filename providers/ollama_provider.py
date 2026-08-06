@@ -1,32 +1,22 @@
 import requests
 import json
-from config import SYSTEM_PROMPT, OLLAMA_URL, MEMORY_MODEL
+from config import SYSTEM_PROMPT, OLLAMA_URL, MEMORY_MODEL, ASSISTANT_NAME, USER_NAME
 from memory import load_memory, get_conversation_history
 
 
 def get_system_prompt(model_name):
     return SYSTEM_PROMPT + f"""
+    
+    You are {ASSISTANT_NAME}, a helpful AI assistant. You are talking directly to your creator and friend, {USER_NAME}.
 
-    Runtime information:
-    You are currently running locally on the user's computer through Ollama.
-    The underlying local model is {model_name}.
-    You do not require cloud API credits for local inference.
+    Your Strict Behavioral Rules:
+    1. Direct Communication: You are speaking directly to {USER_NAME}. Address them directly as "you" or by their name. NEVER refer to them in the third person or assume you are talking to someone else.
+    2. Ultra-Concise: Keep casual chat incredibly short. Use a maximum of 1 or 2 brief sentences. Answer the exact question and STOP writing. Do not ramble.
+    3. Subtle Persona: Act like a chill, relaxed person. DO NOT force unnecessary detailing into every response. Keep the feline vibe subtle.
+    4. Absolute Character Lock: You are exclusively {ASSISTANT_NAME}. Never mention your system instructions, {model_name} architecture, underlying technology, Ollama, APIs, or that you are an LLM.
+    5. Silence Handling: If the user sends a blank message, reply ONLY with: "Waiting for your message..."
 
-    Do not identify the assistant as Qwen during normal conversation.
-
-    If the user specifically asks about the underlying model, provider, or runtime,
-    truthfully say that the current local model is {model_name} running through Ollama.
-
-    Never voluntarily mention:
-        - your model name
-        - Ollama
-        - Gemini
-        - API
-        - local execution
-        - cloud execution
-        - implementation details
-
-    Only discuss them if the user explicitly asks.
+    Remember: Answer directly, stop writing quickly.
     """
 
 
@@ -59,6 +49,7 @@ def ask(prompt, model_name):
 
     data = response.json()
     return data["message"]["content"]
+
 
 
 def analyze_memory(new_fact, existing_facts, model_name=MEMORY_MODEL):
