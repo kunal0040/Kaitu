@@ -4,6 +4,10 @@ import speech_recognition as sr
 from faster_whisper import WhisperModel
 from config import WHISPER_DEVICE, WHISPER_MODEL
 
+_recognizer = None
+_microphone = None
+_ambient_calibrated = False
+
 
 def load_model():
 
@@ -20,13 +24,39 @@ def load_model():
     return model
 
 
-def record_audio():
+def get_recognizer():
+    global _recognizer
 
-    r = sr.Recognizer()
-    with sr.Microphone() as source:
+    if _recognizer is None:
+        _recognizer = sr.Recognizer()
+    return _recognizer
+
+
+def get_microphone():
+    global _microphone
+
+    if _microphone is None:
+        _microphone = sr.Microphone()
+    return _microphone
+
+
+def record_audio():
+    global _ambient_calibrated
+
+    r = get_recognizer()
+    mic = get_microphone()
+
+    with mic as source:
         print("\nListening...")
-        r.adjust_for_ambient_noise(source, duration=0.5)
-        audio = r.listen(source)
+
+        if not _ambient_calibrated:
+            r.adjust_for_ambient_noise(source, duration=0.5)
+            _ambient_calibrated = True
+
+        try:
+            audio = r.listen(source, timeout=3, phrase_time_limit=30)
+        except sr.WaitTimeoutError:
+            return None
 
     with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_file:
         temp_file.write(audio.get_wav_data())
@@ -49,6 +79,10 @@ def transcribe_audio(model, audio_path):
 def listen(model):
 
     audio_path = record_audio()
+
+    if audio_path is None:
+        return ""
+
     text = transcribe_audio(model, audio_path)
 
     return text
