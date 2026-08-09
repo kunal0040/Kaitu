@@ -95,7 +95,6 @@ COMMAND_ALIASES = {
     "compute": "calculate",
     "math": "calculate",
     "what is": "calculate",
-    "what": "calculate",
     "whats": "calculate",
     "evaluate": "calculate",
     "whats": "calculate",       
