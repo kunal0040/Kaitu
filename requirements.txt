@@ -1,0 +1,23 @@
+# === Core ===
+python-dotenv>=1.0.0
+requests>=2.32.0
+
+# === AI Providers ===
+google-genai>=1.0.0
+
+# === Speech-to-Text ===
+faster-whisper>=1.0.0
+SpeechRecognition>=3.10.0
+PyAudio>=0.2.14
+sounddevice>=0.5.0
+
+# === Text-to-Speech ===
+piper-tts>=1.2.0
+
+# === System Control (Windows) ===
+PyGetWindow>=0.0.9
+pywin32>=306
+
+# === Testing ===
+pytest>=8.0.0
+pytest-cov>=5.0.0
