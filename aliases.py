@@ -90,8 +90,22 @@ COMMAND_ALIASES = {
     "narrate": "read",
     "dictate": "read",
     "speak this": "read",
+    #CALCULATE
+    "calculate": "calculate",
+    "compute": "calculate",
+    "math": "calculate",
+    "what is": "calculate",
+    "what": "calculate",
+    "whats": "calculate",
+    "evaluate": "calculate",
+    "whats": "calculate",       
+    "how much is": "calculate",
+    "tell me the answer to": "calculate",
+    "give me the result of": "calculate", 
+    "solve": "calculate",
+    "do the math": "calculate",
+    "find the value of": "calculate",
 }
-
 
 def normalize_target(target):
 

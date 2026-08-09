@@ -2,7 +2,7 @@ from brain import ask_assistant
 from local_responses import get_local_response, LOCAL_PHRASES, normalize_input
 from command_engine import detect_command, execute_command
 from memory_manager import handle_memory_command
-
+from skills.calculator import looks_like_math_expression, execute_calculations
 
 def route_input(user_input):
     normalized_input = normalize_input(user_input)
@@ -18,6 +18,9 @@ def route_input(user_input):
     memory_response = handle_memory_command(user_input)
     if memory_response:
         return memory_response
+
+    if looks_like_math_expression(user_input):
+        return execute_calculations(user_input)
 
     command_data = detect_command(user_input)
 

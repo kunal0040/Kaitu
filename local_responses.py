@@ -180,7 +180,7 @@ WAKE_WORDS = (
     f"okay {ASSISTANT_NAME.lower()}",
     f"yo {ASSISTANT_NAME.lower()}",
     f"please {ASSISTANT_NAME.lower()}",
-    f"listen {ASSISTANT_NAME.lower()}"
+    f"listen {ASSISTANT_NAME.lower()}",
 )
 
 
@@ -188,8 +188,11 @@ def normalize_input(user_input):
 
     normalized_input = user_input.lower().strip()
 
+    keep_chars = "+-*/.%()[]{}=<>!"
+    chars_to_remove = "".join(c for c in string.punctuation if c not in keep_chars)
+
     normalized_input = normalized_input.translate(
-        str.maketrans("", "", string.punctuation)
+        str.maketrans("", "", chars_to_remove)
     )
 
     normalized_input = " ".join(normalized_input.split())

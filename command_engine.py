@@ -67,6 +67,9 @@ def detect_command(user_input):
     elif command == "read":
         return {"command": "run_reader", "target": target}
 
+    elif command == "calculate":
+        return {"command": "maths_calculation", "target": target}
+
     return None
 
 
@@ -86,7 +89,10 @@ def execute_command(command_data):
 
     elif command == "run_reader":
         from skills.reader import execute_reading as read
-
         return read(target)
+
+    elif command == "maths_calculation":
+        from skills.calculator import execute_calculations as calculate
+        return calculate(target)
 
     return None
