@@ -1,7 +1,7 @@
 ASSISTANT_NAME = "Kaitu"
 USER_NAME = "Kunal"
 MODEL_NAME = "gemini-3.5-flash"
-ASSISTANT_VERSION = "0a1"
+ASSISTANT_VERSION = "0a1 - Foxy"
 WHISPER_MODEL = "small"
 WHISPER_DEVICE = "cuda"
 OLLAMA_URL = "http://localhost:11434/api/chat"
