@@ -3,7 +3,7 @@ from google import genai
 from google.genai import types
 from dotenv import load_dotenv
 
-from config import MODEL_NAME, SYSTEM_PROMPT
+from config import MODEL_NAME_GEMINI, SYSTEM_PROMPT
 from memory import load_memory, get_conversation_history
 
 load_dotenv()
@@ -37,7 +37,7 @@ def ask(prompt):
     contents.append(types.Content(role="user", parts=[types.Part(text=prompt)]))
 
     response = client.models.generate_content(
-        model=MODEL_NAME,
+        model=MODEL_NAME_GEMINI,
         contents=contents,
         config=types.GenerateContentConfig(
             system_instruction=SYSTEM_PROMPT + memory_context

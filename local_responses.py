@@ -188,7 +188,7 @@ def normalize_input(user_input):
 
     normalized_input = user_input.lower().strip()
 
-    keep_chars = "+-*/.%()[]{}=<>!"
+    keep_chars = "+-*/%()[]{}=<>"
     chars_to_remove = "".join(c for c in string.punctuation if c not in keep_chars)
 
     normalized_input = normalized_input.translate(

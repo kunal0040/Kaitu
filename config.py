@@ -1,6 +1,7 @@
 ASSISTANT_NAME = "Kaitu"
 USER_NAME = "Kunal"
-MODEL_NAME = "gemini-3.5-flash"
+MODEL_NAME_GEMINI = "gemini-3.5-flash"
+MODEL_NAME_GROQ = "openai/gpt-oss-120b"
 ASSISTANT_VERSION = "0a1 - Foxy"
 WHISPER_MODEL = "small"
 WHISPER_DEVICE = "cuda"

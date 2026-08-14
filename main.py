@@ -21,7 +21,7 @@ def main():
         if mode_func:
 
             result = voice_session(initial_mode=mode_func)
-            
+
             if result == "exit":
                 break
             if result == "keyboard":
