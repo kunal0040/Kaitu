@@ -4,6 +4,7 @@ requests>=2.32.0
 
 # === AI Providers ===
 google-genai>=1.0.0
+groq>=1.6.0
 
 # === Speech-to-Text ===
 faster-whisper>=1.0.0
