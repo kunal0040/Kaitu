@@ -24,14 +24,14 @@ def ask_provider(prompt, mode="cloud"):
 
     if mode == "cloud":
 
-        try:
-            print("[GROQ RESPONSE]")
-            return ask_groq(prompt)
+        # try:
+        #     print("[GROQ RESPONSE]")
+        #     return ask_groq(prompt)
 
-        except Exception:
-            print("\n[ERROR]: Groq is unable to respond! Switching to other model...")
-            print("[GEMINI RESPONSE]")
-            return ask_gemini(prompt)
+        # except Exception:
+        #     print("\n[ERROR]: Groq is unable to respond! Switching to other model...")
+        #     print("[GEMINI RESPONSE]")
+        #     return ask_gemini(prompt)
 
-    print("[OLLAMA RESPONSE]")
-    return ask_ollama(prompt, model_name=TALK_MODEL)
+        print("[OLLAMA RESPONSE]")
+        return ask_ollama(prompt, model_name=TALK_MODEL)
