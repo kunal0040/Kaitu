@@ -20,7 +20,7 @@ eagle.epf
 data
 voices
 tests
-model
+Ollama_test
 *.zip
 
 # Autorouter files
