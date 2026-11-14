@@ -4,76 +4,7 @@ from .speech_output import speak
 from .voice_processing import voice_choices
 from local_responses import normalize_input
 from config import ASSISTANT_NAME, USER_NAME
-
-TWO_WAY_VOICE_COMMAND = {
-    "voice conversation",
-    "two way voice",
-    "voice chat",
-    "full voice mode",
-    "lets call",
-    "lets talk",
-    "lets converse",
-    "talk with me",
-    "talk to me",
-    "speak with me",
-    "enable two way audio",
-    "start a voice call",
-    "mutual voice mode",
-}
-
-TEXT_TO_SPEECH_COMMAND = {
-    "read aloud",
-    "speak to me",
-    "read to me",
-    "read your replies",
-    "speak your answers",
-    "audio output only",
-    "turn on speaker",
-    "voice your responses",
-    "read out loud",
-    "type to voice",
-    "i type you speak",
-    "i want you to speak",
-}
-
-VOICE_INPUT_COMMAND = {
-    "mic on",
-    "turn on the mic",
-    "start listening",
-    "dictation mode",
-    "voice typing",
-    "speech to text",
-    "type what i say",
-    "take dictation",
-    "transcribe my voice",
-    "listen to me",
-    "voice to text",
-    "talk to type",
-    "just listen",
-    "i speak you type",
-}
-
-RETURN_TO_TEXT_COMMAND = {
-    "mic off",
-    "mute mic",
-    "stop audio",
-    "let me type",
-    "stop talking",
-    "turn off mic",
-    "ill type now",
-    "i will type now",
-    "disable voice",
-    "stop listening",
-    "turn off voice",
-    "switch to text",
-    "i want to type",
-    "switch to typing",
-    "return to text",
-    "stop voice mode",
-    "exit voice",
-    "back to text",
-}
-
+from commands import RETURN_TO_TEXT_COMMAND, TWO_WAY_VOICE_COMMAND, TEXT_TO_SPEECH_COMMAND, VOICE_INPUT_COMMAND
 
 _model = None
 

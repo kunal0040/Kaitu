@@ -87,6 +87,7 @@ Kaitu/
 ├── brain.py
 ├── provider_manager.py
 ├── config.py
+├── commands.py
 ├── command_engine.py
 ├── local_responses.py
 ├── aliases.py
@@ -111,6 +112,12 @@ Kaitu/
 ├── .gitignore
 └── README.md
 ```
+
+### Command phrases
+
+`commands.py` is the phrase and response registry used by Kaitu's local interactions. It groups phrases by intent for greetings, farewells, identity, status, date, and time, and provides the corresponding local responses. It also defines phrase lists and related data for voice controls, wake words, pronunciation, and memory commands.
+
+The modules that handle these features import the relevant constants from `commands.py`; phrase matching and command behavior are implemented in those modules.
 
 ## Memory
 

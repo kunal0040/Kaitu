@@ -1,62 +1,9 @@
 import re
 from config import ASSISTANT_VOICES
 from local_responses import normalize_input
+from commands import SWITCH_TO_FEMALE_COMMAND, SWITCH_TO_MALE_COMMAND, TOGGLE_VOICE_GENDER_COMMAND, PRONUNCIATION_MAP
 
 CURRENT_VOICE = ASSISTANT_VOICES["female"]
-
-SWITCH_TO_FEMALE_COMMAND = {
-    "switch to female voice",
-    "switch to female",
-    "use a female voice",
-    "change to female voice",
-    "switch to a woman's voice",
-    "sound like a female",
-    "talk like a woman",
-    "female voice please",
-    "enable female voice",
-    "change voice to female",
-    "switch voice to female",
-    "i want a female voice",
-    "use a woman's voice",
-    "make your voice female",
-}
-
-SWITCH_TO_MALE_COMMAND = {
-    "switch to male voice",
-    "switch to male",
-    "use a male voice",
-    "change to male voice",
-    "switch to a man's voice",
-    "sound like a male",
-    "talk like a man",
-    "talk like a guy",
-    "male voice please",
-    "enable male voice",
-    "change voice to male",
-    "switch voice to male",
-    "i want a male voice",
-    "use a man's voice",
-    "make your voice male",
-}
-
-TOGGLE_VOICE_GENDER_COMMAND = {
-    "change voice gender",
-    "change gender",
-    "change voice",
-    "change your gender",
-    "switch voice gender",
-    "use a different voice",
-    "swap voice",
-    "toggle voice",
-    "switch to the other voice",
-    "use the opposite voice",
-    "change your voice",
-    "give me a different voice",
-}
-
-PRONUNCIATION_MAP = {
-    "Kunal": "Koo-naaal",
-}
 
 
 def preprocess_text(text):

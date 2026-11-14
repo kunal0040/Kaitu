@@ -5,67 +5,10 @@ import random
 import requests
 from datetime import datetime
 from config import OLLAMA_URL, TALK_MODEL, USER_NAME
+from commands import MEMORY_COMMANDS, FORGET_COMMANDS, MEMORY_STATEMENTS, MEMORY_SUMMARY_COMMANDS
 
 SUMMARIZER_MODEL = TALK_MODEL
 MEMORY_FILE = os.path.join("data", "memory.json")
-
-MEMORY_COMMANDS = [
-    "remember that ",
-    "keep in mind that ",
-    "do remember that ",
-    "memorize that ",
-    "remember ",
-    "keep in mind ",
-    "do remember ",
-    "memorize ",
-]
-
-FORGET_COMMANDS = [
-    "remove my memory about that ",
-    "delete from your mind that ",
-    "remove my memory that ",
-    "remove memory that ",
-    "forget that ",
-    "delete that ",
-    "remove my memory about ",
-    "delete from your mind ",
-    "remove my memory ",
-    "remove memory ",
-    "forget ",
-    "delete ",
-]
-
-MEMORY_SUMMARY_COMMANDS = [
-    "what do you know about me",
-    "what do you remember about me",
-    "tell me what you know about me",
-    "tell me what you remember about me",
-    "tell me about myself",
-    "show me my memory",
-    "what's in my memory",
-    "what is in my memory",
-    "who am i to you",
-    "do you know who i am",
-    "what info do you have about me",
-    "summarize what you know about me",
-    "show my profile",
-    "memory summary",
-]
-
-MEMORY_STATEMENTS = {
-        "remember": [
-            f"I'll keep in mind that {USER_NAME}.",
-            f"Got it, {USER_NAME}, I'll remember that for next time.",
-            f"Noted! I'll make sure to factor in {USER_NAME}'s preference.",
-            f"Thanks for the heads-up, {USER_NAME}, I've saved that detail.",
-        ],
-        "forget": [
-            f"Understood, {USER_NAME}. I'll drop this and never bring it up again.",
-            f"Consider it forgotten, {USER_NAME}—my lips are sealed.",
-            f"Got it, {USER_NAME}. Deleting that from my memory right now.",
-            f"Say no more, {USER_NAME}. We will never speak of this again.",
-        ],
-    }
 
 remember_msg = random.choice(MEMORY_STATEMENTS["remember"])
 forget_msg = random.choice(MEMORY_STATEMENTS["forget"])
