@@ -1,7 +1,7 @@
 from brain import ask_assistant
 from local_responses import get_local_response, LOCAL_PHRASES, normalize_input
 from command_engine import detect_command, execute_command
-from memory_manager import handle_memory_command
+from data.memory import handle_memory_command
 from skills.calculator import looks_like_math_expression, execute_calculations
 
 def route_input(user_input):

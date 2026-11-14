@@ -1,6 +1,5 @@
 import random
 import string
-
 from datetime import datetime
 from config import ASSISTANT_NAME, ASSISTANT_VERSION, USER_NAME
 

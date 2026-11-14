@@ -17,9 +17,9 @@ git push origin main
 # comment the following line if you want to have your project file included.
 eagle.epf
 *.vscode
-data
 voices
 tests
+Dump
 Ollama_test
 *.zip
 
@@ -29,10 +29,13 @@ Ollama_test
 *.venv
 *.env
 *.coverage
+*.wav
 
 __pycache__/
 *.pyc
 app_registry.py
+memory.json
+prompt.txt
 
 # CAM files
 *.$$$

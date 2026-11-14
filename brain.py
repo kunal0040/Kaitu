@@ -1,14 +1,7 @@
 from provider_manager import ask_provider
-from memory import add_message
-from memory_manager import handle_pending_memory_action
-
+from data.memory import add_message
 
 def ask_assistant(prompt):
-
-    pending_response = handle_pending_memory_action(prompt)
-
-    if pending_response is not None:
-        return pending_response
 
     normalized_prompt = prompt.lower().strip()
 

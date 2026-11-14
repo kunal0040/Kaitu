@@ -1,6 +1,6 @@
 import os
 from groq import Groq
-from memory import load_memory, get_conversation_history
+from data.memory import load_memory, get_conversation_history
 from config import MODEL_NAME_GROQ, SYSTEM_PROMPT
 
 api_key = os.getenv("GROQ_API_KEY")

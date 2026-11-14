@@ -4,7 +4,7 @@ from google.genai import types
 from dotenv import load_dotenv
 
 from config import MODEL_NAME_GEMINI, SYSTEM_PROMPT
-from memory import load_memory, get_conversation_history
+from data.memory import load_memory, get_conversation_history
 
 load_dotenv()
 
@@ -27,15 +27,19 @@ def ask(prompt):
 
     for message in history:
         role = message["role"]
-
         if role == "assistant":
             role = "model"
+
         contents.append(
-            types.Content(role=role, parts=[types.Part(text=message["content"])])
+            types.Content(
+                role=role,
+                parts=[types.Part(text=message["content"])]
+            )
         )
 
-    contents.append(types.Content(role="user", parts=[types.Part(text=prompt)]))
-
+    contents.append(
+        types.Content(role="user", parts=[types.Part(text=prompt)])
+)
     response = client.models.generate_content(
         model=MODEL_NAME_GEMINI,
         contents=contents,

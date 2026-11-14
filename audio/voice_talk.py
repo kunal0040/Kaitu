@@ -96,7 +96,7 @@ def two_way_voice_mode():
 
         try:
             user_input = listen(model)
-            print(f"You: {user_input}")
+            print(f"{USER_NAME}: {user_input}")
 
             command = normalize_input(user_input)
 
@@ -138,7 +138,7 @@ def text_to_speech_mode():
 
         try:
 
-            user_input = input("You: ")
+            user_input = input(f"{USER_NAME}: ")
 
             if not user_input.strip():
                 continue
@@ -188,7 +188,7 @@ def voice_input_mode():
 
         try:
             user_input = listen(model)
-            print(f"You: {user_input}")
+            print(f"{USER_NAME}: {user_input}")
 
             if not user_input.strip():
                 continue

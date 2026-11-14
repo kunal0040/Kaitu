@@ -8,11 +8,11 @@ def main():
     print(f"{ASSISTANT_NAME} is Online...")
 
     while True:
-        user_input = input("\nYou: ")
+        user_input = input(f"\n{USER_NAME}: ")
 
         if not user_input.strip():
             continue
-
+ 
         command = normalize_input(user_input)
         command = remove_wake_word(command)
 
