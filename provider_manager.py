@@ -23,17 +23,18 @@ def ask_provider(prompt, mode="default"):
         return ask_ollama(prompt, model_name=MEMORY_MODEL)
 
     if mode == "cloud":
-        try:
-            print("[GROQ RESPONSE]")
-            return ask_groq(prompt)
-        except Exception:
-            print("\n[ERROR]: Groq is unable to respond! Trying Gemini...")
 
         try:
             print("[GEMINI RESPONSE]")
             return ask_gemini(prompt)
         except Exception:
             print("\n[ERROR]: Gemini is unable to respond!")
+
+        try:
+            print("[GROQ RESPONSE]")
+            return ask_groq(prompt)
+        except Exception:
+            print("\n[ERROR]: Groq is unable to respond! Trying Gemini...")
 
         print("[OLLAMA RESPONSE]")
         print("[ERROR]: Cloud models failed. Switching to TALK_MODEL...")

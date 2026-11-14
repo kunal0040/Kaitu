@@ -4,7 +4,7 @@ from google.genai import types
 from dotenv import load_dotenv
 
 from config import MODEL_NAME_GEMINI, SYSTEM_PROMPT
-from data.memory import load_memory, get_conversation_history
+from data.memory import get_conversation_history, get_memory_context
 
 load_dotenv()
 
@@ -15,12 +15,7 @@ client = genai.Client(api_key=api_key)
 
 def ask(prompt):
 
-    memory = load_memory()
-
-    memory_context = f"""
-    Known information about the user:
-    {memory}
-    """
+    memory_context = get_memory_context()
 
     history = get_conversation_history()
     contents = []

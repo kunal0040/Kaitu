@@ -1,5 +1,5 @@
 import requests
-from data.memory import load_memory, get_conversation_history
+from data.memory import get_conversation_history, get_memory_context
 from config import SYSTEM_PROMPT, OLLAMA_URL, ASSISTANT_NAME, USER_NAME
 
 
@@ -23,12 +23,7 @@ def get_system_prompt(model_name):
 
 def ask(prompt, model_name):
 
-    memory = load_memory()
-
-    memory_context = f"""
-    Known information about the user:
-    {memory}
-    """
+    memory_context = get_memory_context()
 
     history = get_conversation_history()
 

@@ -1,19 +1,16 @@
 import os
 from groq import Groq
-from data.memory import load_memory, get_conversation_history
 from config import MODEL_NAME_GROQ, SYSTEM_PROMPT
+from data.memory import get_conversation_history, get_memory_context
 
 api_key = os.getenv("GROQ_API_KEY")
 client = Groq(api_key=api_key)
 
 
 def ask(prompt):
-    memory = load_memory()
 
-    memory_context = f"""
-    Known information about the user:
-    {memory}
-    """
+    memory_context = get_memory_context()
+
     history = get_conversation_history()
 
     messages = [{"role": "system", "content": SYSTEM_PROMPT + memory_context}]
@@ -36,6 +33,5 @@ def ask(prompt):
     for chunk in completion:
         if chunk.choices[0].delta.content:
             response_text += chunk.choices[0].delta.content
-            print(chunk.choices[0].delta.content, end="", flush=True)
 
     return response_text

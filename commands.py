@@ -348,16 +348,16 @@ MEMORY_SUMMARY_COMMANDS = [
 ]
 
 MEMORY_STATEMENTS = {
-        "remember": [
-            f"I'll keep in mind that {USER_NAME}.",
-            f"Got it, {USER_NAME}, I'll remember that for next time.",
-            f"Noted! I'll make sure to factor in {USER_NAME}'s preference.",
-            f"Thanks for the heads-up, {USER_NAME}, I've saved that detail.",
-        ],
-        "forget": [
-            f"Understood, {USER_NAME}. I'll drop this and never bring it up again.",
-            f"Consider it forgotten, {USER_NAME}—my lips are sealed.",
-            f"Got it, {USER_NAME}. Deleting that from my memory right now.",
-            f"Say no more, {USER_NAME}. We will never speak of this again.",
-        ],
+    "remember": [
+        f"I'll keep in mind that {USER_NAME}.",
+        f"Got it, {USER_NAME}, I'll remember that for next time.",
+        f"Noted! I'll make sure to factor in {USER_NAME}'s preference.",
+        f"Thanks for the heads-up, {USER_NAME}, I've saved that detail.",
+    ],
+    "forget": [
+        f"Understood, {USER_NAME}. I'll drop this and never bring it up again.",
+        f"Consider it forgotten, {USER_NAME}—my lips are sealed.",
+        f"Got it, {USER_NAME}. Deleting that from my memory right now.",
+        f"Say no more, {USER_NAME}. We will never speak of this again.",
+    ],
 }

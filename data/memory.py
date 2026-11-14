@@ -5,13 +5,19 @@ import random
 import requests
 from datetime import datetime
 from config import OLLAMA_URL, TALK_MODEL, USER_NAME
-from commands import MEMORY_COMMANDS, FORGET_COMMANDS, MEMORY_STATEMENTS, MEMORY_SUMMARY_COMMANDS
+from commands import (
+    MEMORY_COMMANDS,
+    FORGET_COMMANDS,
+    MEMORY_STATEMENTS,
+    MEMORY_SUMMARY_COMMANDS,
+)
 
 SUMMARIZER_MODEL = TALK_MODEL
 MEMORY_FILE = os.path.join("data", "memory.json")
 
 remember_msg = random.choice(MEMORY_STATEMENTS["remember"])
 forget_msg = random.choice(MEMORY_STATEMENTS["forget"])
+
 
 def load_memory():
     if not os.path.exists(MEMORY_FILE):
@@ -48,7 +54,7 @@ def remember_fact(fact):
     new_memory = {
         "memory_id": f"mem_{uuid.uuid4().hex[:8]}",
         "memory": fact,
-        "created_at": datetime.now().astimezone().isoformat()
+        "created_at": datetime.now().astimezone().isoformat(),
     }
     memory_data["memories"].append(new_memory)
     save_memory(memory_data)
@@ -61,7 +67,8 @@ def forget_fact(fact):
     original_count = len(memory_data["memories"])
 
     memory_data["memories"] = [
-        item for item in memory_data["memories"]
+        item
+        for item in memory_data["memories"]
         if item["memory"].strip().casefold() != fact.strip().casefold()
     ]
     if len(memory_data["memories"]) == original_count:
@@ -81,10 +88,7 @@ def memory_summary():
     if not memories:
         return "I don't have any specific facts abot you!!"
 
-    memory_context = "\n".join(
-        f"- {item['memory']}"
-        for item in memories
-    )
+    memory_context = "\n".join(f"- {item['memory']}" for item in memories)
 
     prompt = f"""
     Here are the facts stored in your memory about {USER_NAME}:
@@ -108,18 +112,15 @@ def memory_summary():
                 "messages": [
                     {
                         "role": "system",
-                        "content": f"You are Kaitu's memory engine. Summarize what you know about {USER_NAME} using second-person pronouns ('you', 'your')."
+                        "content": f"You are Kaitu's memory engine. Summarize what you know about {USER_NAME} using second-person pronouns ('you', 'your').",
                     },
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
+                    {"role": "user", "content": prompt},
                 ],
-                "stream": False
+                "stream": False,
             },
-            timeout=120
+            timeout=120,
         )
-        
+
         response.raise_for_status()
         result = response.json()
         return result["message"]["content"].strip()
@@ -135,11 +136,12 @@ def memory_summary():
 
 
 def handle_memory_command(user_input):
-    text = user_input.lower().strip()
+    text = user_input.strip()
+    normalized_text = text.lower()
 
     for command in MEMORY_COMMANDS:
-        if text.startswith(command.casefold()):
-            fact = text[len(command):].strip()
+        if normalized_text.startswith(command.casefold()):
+            fact = text[len(command) :].strip()
 
             if not fact:
                 return f"What should I remember about you, {USER_NAME}?"
@@ -149,8 +151,8 @@ def handle_memory_command(user_input):
             return f"I already know that {USER_NAME}!"
 
     for command in FORGET_COMMANDS:
-        if text.startswith(command.casefold()):
-            fact = text[len(command):].strip()
+        if normalized_text.startswith(command.casefold()):
+            fact = text[len(command) :].strip()
 
             if not fact:
                 return f"What would you like me to forget about you {USER_NAME}?"
@@ -161,6 +163,25 @@ def handle_memory_command(user_input):
 
     if text in MEMORY_SUMMARY_COMMANDS:
         return memory_summary()
+
+
+def get_memory_context():
+
+    memories = get_memory()["memories"]
+
+    if not memories:
+        return ""
+
+    memory_text = "\n".join(f"- {item['memory']}" for item in memories)
+
+    return f"""
+    LONG-TERM MEMORY ABOUT THE USER:
+
+    {memory_text}
+
+    Use these memories when relevant.
+    Do not invent additional personal information.
+    """
 
 
 def add_fact_to_memory(fact):
@@ -174,6 +195,7 @@ def remove_fact_from_memory(fact):
 conversation_history = []
 
 MAX_HISTORY = 10
+
 
 def add_message(role, content):
     conversation_history.append({"role": role, "content": content})
