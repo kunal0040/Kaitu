@@ -45,4 +45,3 @@ def ask(prompt, model_name):
 
     data = response.json()
     return data["message"]["content"]
-

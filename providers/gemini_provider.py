@@ -26,15 +26,10 @@ def ask(prompt):
             role = "model"
 
         contents.append(
-            types.Content(
-                role=role,
-                parts=[types.Part(text=message["content"])]
-            )
+            types.Content(role=role, parts=[types.Part(text=message["content"])])
         )
 
-    contents.append(
-        types.Content(role="user", parts=[types.Part(text=prompt)])
-)
+    contents.append(types.Content(role="user", parts=[types.Part(text=prompt)]))
     response = client.models.generate_content(
         model=MODEL_NAME_GEMINI,
         contents=contents,

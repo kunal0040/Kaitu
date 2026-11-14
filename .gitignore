@@ -3,68 +3,18 @@ git add .
 git commit -m "Initialize Kaitu V1 core architecture and tracking rules"
 git push origin main
 
-# Backup files
-*.s#?
-*.b#?
-*.l#?
-*.b$?
-*.s$?
-*.l$?
-
-# Eagle project file
-# It contains a serial number and references to the file structure
-# on your computer.
-# comment the following line if you want to have your project file included.
-eagle.epf
 *.vscode
 voices
 tests
 Dump
 Ollama_test
-*.zip
 
 # Autorouter files
-*.pro
-*.job
 *.venv
 *.env
 *.coverage
-*.wav
 
 __pycache__/
-*.pyc
 app_registry.py
 memory.json
-prompt.txt
 
-# CAM files
-*.$$$
-*.cmp
-*.ly2
-*.l15
-*.sol
-*.plc
-*.stc
-*.sts
-*.crc
-*.crs
-
-*.dri
-*.drl
-*.gpi
-*.pls
-*.ger
-*.xln
-
-*.drd
-*.drd.*
-
-*.s#*
-*.b#*
-
-*.info
-
-*.eps
-
-# file locks introduced since 7.x
-*.lck
