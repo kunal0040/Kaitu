@@ -1,17 +1,32 @@
+import os
+import json
 import subprocess
 import webbrowser
 from urllib.parse import quote_plus
-
-from app_registry import WEB_SITES
 from app_discovery import get_installed_apps, close_application
 from aliases import COMMAND_ALIASES, normalize_target
 
+PERSONAL_WEBPAGES_FILE = "data/personal_webpages.json"
+
+def load_personal_webpages():
+    if not os.path.exists(PERSONAL_WEBPAGES_FILE):
+        return {}
+
+    try:
+        with open(PERSONAL_WEBPAGES_FILE, "r", encoding="utf-8") as file:
+            data = json.load(file)
+            return data.get("WEB_SITES", {})
+    except (json.JSONDecodeError, KeyError, TypeError):
+        return {}
+
+
+WEB_PAGES = load_personal_webpages()
 
 def open_application(app_name):
     app_name = app_name.lower().strip()
     app = get_installed_apps()
 
-    web_url = WEB_SITES.get(app_name)
+    web_url = WEB_PAGES.get(app_name)
     app_id = app.get(app_name)
 
     try:

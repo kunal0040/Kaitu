@@ -9,13 +9,12 @@ tests
 Dump
 Ollama_test
 
-# Autorouter files
 *.venv
 *.env
 *.coverage
 
 __pycache__/
-app_registry.py
+personal_webpages.json
 memory.json
 conversation_log.json
 
