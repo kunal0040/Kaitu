@@ -1,7 +1,6 @@
-from router import route_input
 from config import ASSISTANT_NAME, USER_NAME
-from local_responses import normalize_input, remove_wake_word
 from audio import handle_voice_mode, voice_session
+from router import route_input, input_processor
 
 
 def main():
@@ -12,11 +11,10 @@ def main():
 
         if not user_input.strip():
             continue
- 
-        command = normalize_input(user_input)
-        command = remove_wake_word(command)
 
-        mode_func = handle_voice_mode(command)
+        processed_input = input_processor(user_input)
+
+        mode_func = handle_voice_mode(processed_input)
 
         if mode_func:
 
@@ -29,7 +27,7 @@ def main():
                 continue
 
         try:
-            response = route_input(command)
+            response = route_input(user_input, processed_input)
 
             if response == "exit":
                 print(f"{ASSISTANT_NAME}: Goodbye! Have a great day {USER_NAME}!")

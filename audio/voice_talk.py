@@ -1,4 +1,4 @@
-from router import route_input
+from router import route_input, input_processor
 from .speech_input import listen, load_model
 from .speech_output import speak
 from .voice_processing import voice_choices
@@ -27,24 +27,29 @@ def two_way_voice_mode():
 
         try:
             user_input = listen(model)
+            
+            if not user_input.strip():
+                continue
+
             print(f"{USER_NAME}: {user_input}")
 
-            command = normalize_input(user_input)
+            original_input = user_input
+            processed_input = input_processor(original_input)
 
-            if command in RETURN_TO_TEXT_COMMAND:
+            if processed_input in RETURN_TO_TEXT_COMMAND:
                 print("Returning to keyboard mode.")
                 return "keyboard"
 
-            next_mode = handle_voice_mode(command)
+            next_mode = handle_voice_mode(processed_input)
             if next_mode:
                 return next_mode
 
-            new_voice = voice_choices(user_input)
+            new_voice = voice_choices(processed_input)
             if new_voice:
                 speak("Voice updated.")
                 continue
 
-            response = route_input(user_input)
+            response = route_input(original_input, processed_input)
 
             if response == "exit":
                 speak(f"Goodbye! Have a great day {USER_NAME}!")
@@ -74,23 +79,24 @@ def text_to_speech_mode():
             if not user_input.strip():
                 continue
 
-            command = normalize_input(user_input)
+            original_input = user_input
+            processed_input = input_processor(original_input)
 
-            if command in RETURN_TO_TEXT_COMMAND:
+            if processed_input in RETURN_TO_TEXT_COMMAND:
                 print("\nReturning to keyboard mode.\n")
                 return "keyboard"
 
-            next_mode = handle_voice_mode(command)
+            next_mode = handle_voice_mode(processed_input)
             if next_mode:
                 return next_mode
 
-            new_voice = voice_choices(user_input)
+            new_voice = voice_choices(processed_input)
             if new_voice:
                 speak("Voice updated.")
                 continue
             
 
-            response = route_input(user_input)
+            response = route_input(original_input, processed_input)
 
             if response == "exit":
                 speak(f"Goodbye! Have a great day {USER_NAME}!")
@@ -124,23 +130,24 @@ def voice_input_mode():
             if not user_input.strip():
                 continue
 
-            command = normalize_input(user_input)
+            original_input = user_input
+            processed_input = input_processor(original_input)
 
-            if command in RETURN_TO_TEXT_COMMAND:
+            if processed_input in RETURN_TO_TEXT_COMMAND:
                 print("Returning to keyboard mode.\n")
                 return "keyboard"
 
-            next_mode = handle_voice_mode(command)
+            next_mode = handle_voice_mode(processed_input)
             if next_mode:
                 return next_mode
 
-            new_voice = voice_choices(user_input)
+            new_voice = voice_choices(processed_input)
             if new_voice:
                 speak("Voice updated.")
                 continue
             
 
-            response = route_input(user_input)
+            response = route_input(original_input, processed_input)
 
             if response == "exit":
                 print(f"{ASSISTANT_NAME}: Goodbye! Have a great day {USER_NAME}!")

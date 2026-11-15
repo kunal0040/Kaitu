@@ -17,4 +17,5 @@ Ollama_test
 __pycache__/
 app_registry.py
 memory.json
+conversation_log.json
 

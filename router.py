@@ -1,34 +1,38 @@
 from brain import ask_assistant
 from commands import LOCAL_PHRASES
-from local_responses import get_local_response, normalize_input
-from command_engine import detect_command, execute_command
 from data.memory import handle_memory_command
+from data.logs.coversation_logs import save_conversation
+from command_engine import detect_command, execute_command
 from skills.calculator import looks_like_math_expression, execute_calculations
+from local_responses import get_local_response, normalize_input, remove_wake_word
 
-def route_input(user_input):
-    normalized_input = normalize_input(user_input)
 
-    if normalized_input in LOCAL_PHRASES["farewell"]:
+def input_processor(user_input):
+    processed_input = remove_wake_word(normalize_input(user_input))
+    return processed_input
+
+
+def route_input(original_input, processed_input):
+
+    if processed_input in LOCAL_PHRASES["farewell"]:
         return "exit"
 
-    local_response = get_local_response(user_input)
+    response = get_local_response(processed_input)
 
-    if local_response:
-        return local_response
+    if response is None:
+        response = handle_memory_command(processed_input)
 
-    memory_response = handle_memory_command(user_input)
-    if memory_response:
-        return memory_response
+    if response is None and looks_like_math_expression(processed_input):
+        response = execute_calculations(processed_input)
 
-    if looks_like_math_expression(user_input):
-        return execute_calculations(user_input)
+    if response is None:
+        command_data = detect_command(processed_input)
+        if command_data:
+            response = execute_command(command_data)
 
-    command_data = detect_command(user_input)
+    if response is None:
+        response = ask_assistant(processed_input)
 
-    if command_data:
-        command_response = execute_command(command_data)
+    save_conversation(original_input, processed_input, response)
 
-        if command_response:
-            return command_response
-
-    return ask_assistant(user_input)
+    return response
