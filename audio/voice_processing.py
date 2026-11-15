@@ -1,17 +1,22 @@
 import re
 from config import ASSISTANT_VOICES
 from local_responses import normalize_input
-from commands import SWITCH_TO_FEMALE_COMMAND, SWITCH_TO_MALE_COMMAND, TOGGLE_VOICE_GENDER_COMMAND, PRONUNCIATION_MAP
+from commands import (
+    SWITCH_TO_FEMALE_COMMAND,
+    SWITCH_TO_MALE_COMMAND,
+    TOGGLE_VOICE_GENDER_COMMAND,
+    PRONUNCIATION_MAP,
+)
 
 CURRENT_VOICE = ASSISTANT_VOICES["female"]
 
 
 def preprocess_text(text):
     text = text.replace("\n", ". ")
-    text = re.sub(r'\[.*?\]', '', text)
-    text = re.sub(r'[*_~`#-]', '', text)
-    text = re.sub(r'http\S+', '', text)
-    text = re.sub(r'\s+', ' ', text).strip()
+    text = re.sub(r"\[.*?\]", "", text)
+    text = re.sub(r"[*_~`#-]", "", text)
+    text = re.sub(r"http\S+", "", text)
+    text = re.sub(r"\s+", " ", text).strip()
     text = re.sub(r"\[(.*?)\]\((.*?)\)", r"\1", text)
     text = re.sub(r"^\s*[-•]\s*", "", text, flags=re.MULTILINE)
 

@@ -1,7 +1,7 @@
 from brain import ask_assistant
 from commands import LOCAL_PHRASES
 from data.memory import handle_memory_command
-from data.logs.coversation_logs import save_conversation
+from data.logs.conversation_logs import save_conversation
 from command_engine import detect_command, execute_command
 from skills.calculator import looks_like_math_expression, execute_calculations
 from local_responses import get_local_response, normalize_input, remove_wake_word

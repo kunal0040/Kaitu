@@ -20,6 +20,7 @@ def load_voice():
 
     return _voice
 
+
 def speak(text):
 
     voice = load_voice()
@@ -31,4 +32,3 @@ def speak(text):
     winsound.PlaySound(TEMP_AUDIO, winsound.SND_FILENAME)
 
     os.remove(TEMP_AUDIO)
-

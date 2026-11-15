@@ -1,10 +1,14 @@
-from router import route_input, input_processor
-from .speech_input import listen, load_model
 from .speech_output import speak
 from .voice_processing import voice_choices
-from local_responses import normalize_input
 from config import ASSISTANT_NAME, USER_NAME
-from commands import RETURN_TO_TEXT_COMMAND, TWO_WAY_VOICE_COMMAND, TEXT_TO_SPEECH_COMMAND, VOICE_INPUT_COMMAND
+from .speech_input import listen, load_model
+from router import route_input, input_processor
+from commands import (
+    RETURN_TO_TEXT_COMMAND,
+    TWO_WAY_VOICE_COMMAND,
+    TEXT_TO_SPEECH_COMMAND,
+    VOICE_INPUT_COMMAND,
+)
 
 _model = None
 
@@ -27,7 +31,7 @@ def two_way_voice_mode():
 
         try:
             user_input = listen(model)
-            
+
             if not user_input.strip():
                 continue
 
@@ -94,7 +98,6 @@ def text_to_speech_mode():
             if new_voice:
                 speak("Voice updated.")
                 continue
-            
 
             response = route_input(original_input, processed_input)
 
@@ -145,7 +148,6 @@ def voice_input_mode():
             if new_voice:
                 speak("Voice updated.")
                 continue
-            
 
             response = route_input(original_input, processed_input)
 
