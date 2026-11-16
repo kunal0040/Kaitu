@@ -1,8 +1,8 @@
 from router import route_input
 from .speech_output import speak
-from local_responses import input_processor
 from .voice_processing import voice_choices
 from .speech_input import listen, load_model
+from local_responses import input_processor, is_farewell
 from config import ASSISTANT_NAME, USER_NAME
 from commands import (
     RETURN_TO_TEXT_COMMAND,
@@ -56,13 +56,11 @@ def two_way_voice_mode():
 
             response = route_input(original_input, processed_input)
 
-            if response == "exit":
-                speak(f"Goodbye! Have a great day {USER_NAME}!")
-                print(f"{ASSISTANT_NAME}: Goodbye! Have a great day {USER_NAME}!")
-                return "exit"
-
             print(f"{ASSISTANT_NAME}: {response}")
             speak(response)
+
+            if is_farewell(processed_input):
+                return "exit"
 
         except RuntimeError:
             error_message = f"\nI'm unable to recognise your command, {USER_NAME}."
@@ -102,13 +100,11 @@ def text_to_speech_mode():
 
             response = route_input(original_input, processed_input)
 
-            if response == "exit":
-                speak(f"Goodbye! Have a great day {USER_NAME}!")
-                print(f"{ASSISTANT_NAME}: Goodbye! Have a great day {USER_NAME}!")
-                return "exit"
-
             print(f"{ASSISTANT_NAME}: {response}")
             speak(response)
+
+            if is_farewell(processed_input):
+                return "exit"
 
         except Exception as error:
             error_message = (
@@ -152,11 +148,10 @@ def voice_input_mode():
 
             response = route_input(original_input, processed_input)
 
-            if response == "exit":
-                print(f"{ASSISTANT_NAME}: Goodbye! Have a great day {USER_NAME}!")
-                return "exit"
-
             print(f"{ASSISTANT_NAME}: {response}")
+
+            if is_farewell(processed_input):
+                return "exit"
 
         except RuntimeError:
             error_message = f"\nI'm unable to recognise your command, {USER_NAME}."

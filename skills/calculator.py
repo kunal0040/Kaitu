@@ -1,6 +1,7 @@
 import re
 import random
 from local_responses import normalize_input
+from brain import ask_assistant
 
 SYMBOLS_REPLACEMENTS = {
     "plus": "+",
@@ -79,7 +80,7 @@ def execute_calculations(target: str) -> str:
     safe_expression = re.sub(r"\s+", "", safe_expression)
 
     if not safe_expression:
-        return "That doesn't sound like a valid math problem."
+        return ask_assistant(str(target))
 
     prefix = random.choice(MATH_ANSWER_PREFIXS)
 
@@ -100,6 +101,8 @@ def execute_calculations(target: str) -> str:
 
     except ZeroDivisionError:
         return "I cannot divide by zero."
+    except SyntaxError:
+        return ask_assistant(str(target))
     except Exception:
         return "I couldn't compute that exact expression."
 

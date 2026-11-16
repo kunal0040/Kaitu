@@ -37,11 +37,13 @@ def remove_wake_word(user_input):
 
     return user_input
 
+
 def input_processor(user_input):
     
     removed_wakeword_input = remove_wake_word(user_input)
     processed_input = normalize_input(removed_wakeword_input)
     return processed_input
+
 
 def get_local_response(user_input):
 
@@ -62,6 +64,10 @@ def get_local_response(user_input):
             return random.choice(LOCAL_RESPONSES[intent])
 
     return None
+
+
+def is_farewell(user_input):
+    return input_processor(user_input) in LOCAL_PHRASES["farewell"]
 
 
 def get_current_time():

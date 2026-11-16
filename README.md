@@ -90,14 +90,14 @@ Kaitu/
 ├── provider_manager.py
 ├── config.py
 ├── commands.py
-├── command_engine.py
 ├── local_responses.py
+├── command_engine.py
 ├── aliases.py
 ├── app_discovery.py
 ├── data/
 │   ├── memory.py
 │   └── logs/
-│       ├── conversation_logs.py
+│       └── conversation_logs.py
 ├── providers/
 │   ├── __init__.py
 │   ├── ollama_provider.py

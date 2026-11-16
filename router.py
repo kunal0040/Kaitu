@@ -9,9 +9,6 @@ from skills.calculator import looks_like_math_expression, execute_calculations
 
 def route_input(original_input, processed_input):
 
-    if processed_input in LOCAL_PHRASES["farewell"]:
-        return "exit"
-
     response = get_local_response(processed_input)
 
     if response is None:
@@ -24,6 +21,7 @@ def route_input(original_input, processed_input):
         command_data = detect_command(processed_input)
         if command_data:
             response = execute_command(command_data)
+
 
     if response is None:
         response = ask_assistant(remove_wake_word(original_input))

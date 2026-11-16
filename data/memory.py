@@ -4,7 +4,7 @@ import uuid
 import random
 import requests
 from datetime import datetime
-from config import OLLAMA_URL, TALK_MODEL, USER_NAME
+from config import OLLAMA_URL, TALK_MODEL, USER_NAME, ASSISTANT_NAME
 from commands import (
     MEMORY_COMMANDS,
     FORGET_COMMANDS,
@@ -54,7 +54,7 @@ def remember_fact(fact):
     new_memory = {
         "memory_id": f"mem_{uuid.uuid4().hex[:8]}",
         "memory": fact,
-        "created_at": datetime.now().astimezone().isoformat(),
+        "created_at": datetime.now().strftime("%d-%m-%y %H:%M:%S"),
     }
     memory_data["memories"].append(new_memory)
     save_memory(memory_data)
@@ -86,7 +86,7 @@ def memory_summary():
     memories = memory_data["memories"]
 
     if not memories:
-        return "I don't have any specific facts abot you!!"
+        return f"I think you haven't told me anything about you yet!!"
 
     memory_context = "\n".join(f"- {item['memory']}" for item in memories)
 
@@ -95,13 +95,13 @@ def memory_summary():
 
     {memory_context}
 
-    Tell {USER_NAME} what you know about them in a natural, conversational way.
+    Give {USER_NAME} a brief, direct summary of these facts.
 
     Instructions:
     - Address {USER_NAME} directly using "you" and "your" (e.g., "You are...", "You live in...").
-    - Never speak as if you are the user. You are Kaitu, the assistant.
+    - Never speak as if you are the user. You are {ASSISTANT_NAME}, the assistant.
     - Use only the facts provided above. Do not invent or assume anything.
-    - Organize related information naturally without unnecessary repetition.
+    - Return only the summary, without an introduction or extra commentary.
     """
 
     try:
@@ -112,7 +112,7 @@ def memory_summary():
                 "messages": [
                     {
                         "role": "system",
-                        "content": f"You are Kaitu's memory engine. Summarize what you know about {USER_NAME} using second-person pronouns ('you', 'your').",
+                        "content": f"You are {ASSISTANT_NAME}'s memory engine. Summarize what you know about {USER_NAME} using second-person pronouns ('you', 'your').",
                     },
                     {"role": "user", "content": prompt},
                 ],
@@ -126,7 +126,9 @@ def memory_summary():
         return result["message"]["content"].strip()
 
     except requests.exceptions.ConnectionError:
-        return "Unable to connect to Ollama. Please check whether Ollama is running."
+        return (
+            "Unable to connect to Ollama. Please check whether local model is running."
+        )
 
     except requests.exceptions.Timeout:
         return "Memory summarization timed out."
@@ -159,7 +161,7 @@ def handle_memory_command(user_input):
 
             if forget_fact(fact):
                 return forget_msg
-            return f"I think you haven't told me anything like that {USER_NAME}!"
+            return f"I think you haven't told me anything like that."
 
     if text in MEMORY_SUMMARY_COMMANDS:
         return memory_summary()

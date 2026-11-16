@@ -1,17 +1,10 @@
 # Ignore rules only; run git add/commit/push commands in the terminal.
 
+# Python bytecode cache directories.
+__pycache__/
+
 # VS Code workspace configuration files/directories.
 *.vscode
-
-# Voice model assets and related voice files.
-voices
-
-# Test suite directory.
-tests
-
-# Archived or experimental code.
-Dump
-Ollama_test
 
 # Python virtual environment directories.
 *.venv
@@ -22,11 +15,8 @@ Ollama_test
 # Coverage output files.
 *.coverage
 
-# Python bytecode cache directories.
-__pycache__/
-
-# Local personal webpage data.
-personal_webpages.json
+# Voice model assets and related voice files.
+voices
 
 # Local memory data.
 memory.json
@@ -34,3 +24,12 @@ memory.json
 # Local conversation history.
 conversation_log.json
 
+# Local personal webpage data.
+personal_webpages.json
+
+# Test suite directory.
+tests
+
+# Archived or experimental code.
+Dump
+Ollama_test
