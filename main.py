@@ -1,5 +1,4 @@
 from router import route_input
-from commands import LOCAL_PHRASES
 from config import ASSISTANT_NAME, USER_NAME
 from audio import handle_voice_mode, voice_session
 from local_responses import input_processor, is_farewell
