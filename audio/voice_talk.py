@@ -1,8 +1,9 @@
+from router import route_input
 from .speech_output import speak
+from local_responses import input_processor
 from .voice_processing import voice_choices
-from config import ASSISTANT_NAME, USER_NAME
 from .speech_input import listen, load_model
-from router import route_input, input_processor
+from config import ASSISTANT_NAME, USER_NAME
 from commands import (
     RETURN_TO_TEXT_COMMAND,
     TWO_WAY_VOICE_COMMAND,

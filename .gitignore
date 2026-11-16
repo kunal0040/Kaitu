@@ -1,20 +1,36 @@
-# Ignore list for Eagle, a PCB layout tool
-git add .
-git commit -m "Initialize Kaitu V1 core architecture and tracking rules"
-git push origin main
+# Ignore rules only; run git add/commit/push commands in the terminal.
 
+# VS Code workspace configuration files/directories.
 *.vscode
+
+# Voice model assets and related voice files.
 voices
+
+# Test suite directory.
 tests
+
+# Archived or experimental code.
 Dump
 Ollama_test
 
+# Python virtual environment directories.
 *.venv
+
+# Environment files that may contain local settings or secrets.
 *.env
+
+# Coverage output files.
 *.coverage
 
+# Python bytecode cache directories.
 __pycache__/
+
+# Local personal webpage data.
 personal_webpages.json
+
+# Local memory data.
 memory.json
+
+# Local conversation history.
 conversation_log.json
 

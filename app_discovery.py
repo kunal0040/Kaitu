@@ -1,5 +1,5 @@
-import subprocess
 import json
+import subprocess
 import pygetwindow as gw
 from aliases import normalize_target
 

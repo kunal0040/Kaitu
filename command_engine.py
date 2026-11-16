@@ -3,10 +3,11 @@ import json
 import subprocess
 import webbrowser
 from urllib.parse import quote_plus
-from app_discovery import get_installed_apps, close_application
 from aliases import COMMAND_ALIASES, normalize_target
+from app_discovery import get_installed_apps, close_application
 
 PERSONAL_WEBPAGES_FILE = "data/personal_webpages.json"
+
 
 def load_personal_webpages():
     if not os.path.exists(PERSONAL_WEBPAGES_FILE):
@@ -21,6 +22,7 @@ def load_personal_webpages():
 
 
 WEB_PAGES = load_personal_webpages()
+
 
 def open_application(app_name):
     app_name = app_name.lower().strip()
@@ -104,10 +106,12 @@ def execute_command(command_data):
 
     elif command == "run_reader":
         from skills.reader import execute_reading as read
+
         return read(target)
 
     elif command == "maths_calculation":
         from skills.calculator import execute_calculations as calculate
+
         return calculate(target)
 
     return None

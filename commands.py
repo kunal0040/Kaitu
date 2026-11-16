@@ -153,9 +153,9 @@ LOCAL_RESPONSES = {
     "version": [
         f"I'm currently on version {ASSISTANT_VERSION}.",
         f"We are running build version {ASSISTANT_VERSION} right now.",
-        f"This is Kaitu build {ASSISTANT_VERSION}.",
+        f"This is {ASSISTANT_NAME} build {ASSISTANT_VERSION}.",
         f"We're on version {ASSISTANT_VERSION}, sir. Everything is running smoothly.",
-        f"This is Kaitu Version {ASSISTANT_VERSION}. No issues found!",
+        f"This is {ASSISTANT_NAME} Version {ASSISTANT_VERSION}. No issues found!",
         f"We've got version {ASSISTANT_VERSION} loaded up and ready.",
     ],
     "status_check": [

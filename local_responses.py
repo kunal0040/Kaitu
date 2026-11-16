@@ -1,3 +1,4 @@
+import re
 import random
 import string
 from datetime import datetime
@@ -22,14 +23,25 @@ def normalize_input(user_input):
 
 def remove_wake_word(user_input):
 
-    text = normalize_input(user_input)
+    if not user_input:
+        return user_input
 
-    for wake_word in WAKE_WORDS:
-        if text.startswith(wake_word):
-            return text[len(wake_word) :].strip()
+    for wake_word in sorted(WAKE_WORDS, key=len, reverse=True):
 
-    return text
+        pattern = rf"^\s*{re.escape(wake_word)}(?=$|[\s,.:!?-])"
 
+        match = re.match(pattern, user_input, re.IGNORECASE)
+
+        if match:
+            return user_input[match.end():].lstrip(" \t,.:!?-")
+
+    return user_input
+
+def input_processor(user_input):
+    
+    removed_wakeword_input = remove_wake_word(user_input)
+    processed_input = normalize_input(removed_wakeword_input)
+    return processed_input
 
 def get_local_response(user_input):
 

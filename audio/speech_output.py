@@ -1,8 +1,8 @@
 import os
 import wave
 import winsound
-from .voice_processing import preprocess_text, get_current_voice
 from piper import PiperVoice, SynthesisConfig
+from .voice_processing import preprocess_text, get_current_voice
 
 TEMP_AUDIO = "_temp_speech.wav"
 _voice = None

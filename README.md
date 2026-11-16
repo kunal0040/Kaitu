@@ -59,7 +59,7 @@ main.py
   ├─ audio.voice_talk (optional voice sessions)
   └─ router.route_input
        ├─ local_responses
-       ├─ data.memory (fact commands and summary)
+       ├─ data.memory (fact commands, summary and conversation logs)
        ├─ skills.calculator
        ├─ command_engine (app control, web search, reading)
        └─ brain.ask_assistant
@@ -71,10 +71,12 @@ main.py
 
 The router handles farewells, local responses, memory, calculations, and recognized commands before falling back to an AI provider. Voice sessions use the same router.
 
+Input handling removes a leading wake word. Local routing uses normalized text, while the AI fallback receives the original input with the wake word removed.
+
 | Prefix | Provider behavior |
 |---|---|
 | *(none)* | Ollama with `TALK_MODEL` |
-| `cloud ` | Groq → Gemini → Ollama with `TALK_MODEL` |
+| `cloud ` | Gemini → Groq → Ollama with `TALK_MODEL` |
 | `think ` | Gemini → Ollama with `MEMORY_MODEL` |
 | `ola ` | Ollama with `MEMORY_MODEL` |
 
@@ -93,7 +95,9 @@ Kaitu/
 ├── aliases.py
 ├── app_discovery.py
 ├── data/
-│   └── memory.py
+│   ├── memory.py
+│   └── logs/
+│       ├── conversation_logs.py
 ├── providers/
 │   ├── __init__.py
 │   ├── ollama_provider.py
@@ -119,6 +123,10 @@ Kaitu/
 
 The modules that handle these features import the relevant constants from `commands.py`; phrase matching and command behavior are implemented in those modules.
 
+### Personal webpage shortcuts
+
+`data/personal_webpages.json` maps shortcut names to URLs under the `WEB_SITES` key. `command_engine.py` loads these shortcuts so a command such as `open github` opens its configured URL. This file is local and ignored by Git.
+
 ## Memory
 
 `data/memory.py` stores user facts in the ignored runtime file `data/memory.json`. The expected format is:
@@ -137,7 +145,13 @@ The modules that handle these features import the relevant constants from `comma
 
 Use explicit phrases such as `remember that I live in India`, `forget that I live in India`, or `what do you know about me`. Forgetting currently compares wording after trimming outer whitespace and ignoring capitalization; semantic matching is not implemented. Summaries are generated locally through Ollama.
 
-Conversation history is kept in memory for the current process only, limited to the latest 10 messages. It is not saved across restarts. Cloud providers receive the saved memory context when used, so avoid storing sensitive information if you do not want it sent to a cloud service.
+Conversation context is kept in memory for the current process only, limited to the latest 10 messages.
+
+### Conversation log
+
+`data/logs/conversation_logs.py` loads and saves the persistent log at `data/logs/conversation_log.json`. Each entry records the original input, processed input, assistant response, and conversation time. The JSON file is generated locally and ignored by Git; it is separate from the short-term conversation context above.
+
+Cloud providers receive the saved memory context when used, so avoid storing sensitive information if you do not want it sent to a cloud service.
 
 ## Setup ##
 

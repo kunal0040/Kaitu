@@ -3,13 +3,8 @@ from commands import LOCAL_PHRASES
 from data.memory import handle_memory_command
 from data.logs.conversation_logs import save_conversation
 from command_engine import detect_command, execute_command
+from local_responses import get_local_response, remove_wake_word
 from skills.calculator import looks_like_math_expression, execute_calculations
-from local_responses import get_local_response, normalize_input, remove_wake_word
-
-
-def input_processor(user_input):
-    processed_input = remove_wake_word(normalize_input(user_input))
-    return processed_input
 
 
 def route_input(original_input, processed_input):
@@ -31,7 +26,7 @@ def route_input(original_input, processed_input):
             response = execute_command(command_data)
 
     if response is None:
-        response = ask_assistant(processed_input)
+        response = ask_assistant(remove_wake_word(original_input))
 
     save_conversation(original_input, processed_input, response)
 

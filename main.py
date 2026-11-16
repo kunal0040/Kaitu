@@ -1,6 +1,7 @@
+from router import route_input
+from local_responses import input_processor
 from config import ASSISTANT_NAME, USER_NAME
 from audio import handle_voice_mode, voice_session
-from router import route_input, input_processor
 
 
 def main():

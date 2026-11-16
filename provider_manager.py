@@ -1,5 +1,5 @@
-from providers import ask_gemini, ask_ollama, ask_groq
 from config import TALK_MODEL, MEMORY_MODEL
+from providers import ask_gemini, ask_ollama, ask_groq
 
 
 def ask_provider(prompt, mode="default"):
