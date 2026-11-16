@@ -70,6 +70,9 @@ def is_farewell(user_input):
     return input_processor(user_input) in LOCAL_PHRASES["farewell"]
 
 
+def is_greeting():
+    print(random.choice(LOCAL_RESPONSES["greeting"]))
+
 def get_current_time():
     current_time = datetime.now().strftime("%I:%M %p")
     return current_time

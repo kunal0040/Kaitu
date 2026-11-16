@@ -1,11 +1,12 @@
 from router import route_input
 from config import ASSISTANT_NAME, USER_NAME
 from audio import handle_voice_mode, voice_session
-from local_responses import input_processor, is_farewell
+from local_responses import input_processor, is_farewell, is_greeting
 
 
 def main():
     print(f"{ASSISTANT_NAME} is Online...")
+    is_greeting()
 
     while True:
         user_input = input(f"\n{USER_NAME}: ")
