@@ -1,6 +1,5 @@
 from brain import ask_assistant
-from commands import LOCAL_PHRASES
-from data.memory import handle_memory_command
+from data.memory import handle_memory_command, add_message
 from data.logs.conversation_logs import save_conversation
 from command_engine import detect_command, execute_command
 from local_responses import get_local_response, remove_wake_word
@@ -22,10 +21,11 @@ def route_input(original_input, processed_input):
         if command_data:
             response = execute_command(command_data)
 
-
     if response is None:
         response = ask_assistant(remove_wake_word(original_input))
 
     save_conversation(original_input, processed_input, response)
+    add_message("user", original_input)
+    add_message("assistant", response)
 
     return response

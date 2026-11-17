@@ -196,7 +196,7 @@ def remove_fact_from_memory(fact):
 
 conversation_history = []
 
-MAX_HISTORY = 10
+MAX_HISTORY = 20
 
 
 def add_message(role, content):

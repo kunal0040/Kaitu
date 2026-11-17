@@ -1,7 +1,8 @@
 import re
-import random
 import string
+import random
 from datetime import datetime
+from data.logs.conversation_logs import save_conversation
 from commands import LOCAL_PHRASES, LOCAL_RESPONSES, WAKE_WORDS
 
 
@@ -33,13 +34,13 @@ def remove_wake_word(user_input):
         match = re.match(pattern, user_input, re.IGNORECASE)
 
         if match:
-            return user_input[match.end():].lstrip(" \t,.:!?-")
+            return user_input[match.end() :].lstrip(" \t,.:!?-")
 
     return user_input
 
 
 def input_processor(user_input):
-    
+
     removed_wakeword_input = remove_wake_word(user_input)
     processed_input = normalize_input(removed_wakeword_input)
     return processed_input
@@ -71,7 +72,10 @@ def is_farewell(user_input):
 
 
 def is_greeting():
-    print(random.choice(LOCAL_RESPONSES["greeting"]))
+    response = random.choice(LOCAL_RESPONSES["greeting"])
+    save_conversation("Start", "Start", response)
+    print(response)
+
 
 def get_current_time():
     current_time = datetime.now().strftime("%I:%M %p")
