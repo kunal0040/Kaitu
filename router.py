@@ -9,9 +9,10 @@ from skills.calculator import looks_like_math_expression, execute_calculations
 def route_input(original_input, processed_input):
 
     response = get_local_response(processed_input)
+    filtered_original_input = remove_wake_word(original_input)
 
     if response is None:
-        response = handle_memory_command(processed_input)
+        response = handle_memory_command(filtered_original_input)
 
     if response is None and looks_like_math_expression(processed_input):
         response = execute_calculations(processed_input)
@@ -22,7 +23,7 @@ def route_input(original_input, processed_input):
             response = execute_command(command_data)
 
     if response is None:
-        response = ask_assistant(remove_wake_word(original_input))
+        response = ask_assistant(filtered_original_input)
 
     save_conversation(original_input, processed_input, response)
     add_message("user", original_input)

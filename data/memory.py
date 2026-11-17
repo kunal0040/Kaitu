@@ -4,6 +4,7 @@ import uuid
 import random
 import requests
 from datetime import datetime
+from local_responses import normalize_input
 from config import OLLAMA_URL, TALK_MODEL, USER_NAME, ASSISTANT_NAME
 from commands import (
     MEMORY_COMMANDS,
@@ -47,8 +48,10 @@ def save_memory(memory):
 def remember_fact(fact):
     memory_data = load_memory()
 
+    normalized_fact = normalize_input(fact)
+
     for item in memory_data["memories"]:
-        if item["memory"].strip().casefold() == fact.strip().casefold():
+        if normalize_input(item["memory"]) == normalized_fact:
             return False
 
     new_memory = {
@@ -64,12 +67,14 @@ def remember_fact(fact):
 def forget_fact(fact):
     memory_data = load_memory()
 
+    normalized_fact = normalize_input(fact)
+
     original_count = len(memory_data["memories"])
 
     memory_data["memories"] = [
         item
         for item in memory_data["memories"]
-        if item["memory"].strip().casefold() != fact.strip().casefold()
+        if normalize_input(item["memory"]) != normalized_fact
     ]
     if len(memory_data["memories"]) == original_count:
         return False
@@ -139,7 +144,7 @@ def memory_summary():
 
 def handle_memory_command(user_input):
     text = user_input.strip()
-    normalized_text = text.lower()
+    normalized_text = normalize_input(user_input)
 
     for command in MEMORY_COMMANDS:
         if normalized_text.startswith(command.casefold()):
@@ -163,7 +168,7 @@ def handle_memory_command(user_input):
                 return forget_msg
             return f"I think you haven't told me anything like that."
 
-    if text in MEMORY_SUMMARY_COMMANDS:
+    if normalized_text in MEMORY_SUMMARY_COMMANDS:
         return memory_summary()
 
 
