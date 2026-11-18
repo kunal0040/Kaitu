@@ -1,7 +1,7 @@
 import json
 import subprocess
 import pygetwindow as gw
-from aliases import normalize_target
+from .aliases import normalize_target
 
 
 def get_installed_apps():

@@ -4,9 +4,9 @@ import uuid
 import random
 import requests
 from datetime import datetime
-from local_responses import normalize_input
+from local_response.input_analyzer import normalize_input
 from config import OLLAMA_URL, TALK_MODEL, USER_NAME, ASSISTANT_NAME
-from commands import (
+from local_response.commands import (
     MEMORY_COMMANDS,
     FORGET_COMMANDS,
     MEMORY_STATEMENTS,

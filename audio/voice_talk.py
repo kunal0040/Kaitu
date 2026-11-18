@@ -2,9 +2,9 @@ from router import route_input
 from .speech_output import speak
 from .voice_processing import voice_choices
 from .speech_input import listen, load_model
-from local_responses import input_processor, is_farewell
 from config import ASSISTANT_NAME, USER_NAME
-from commands import (
+from local_response.input_analyzer import input_processor, correct_command_input, is_farewell
+from local_response.commands import (
     RETURN_TO_TEXT_COMMAND,
     TWO_WAY_VOICE_COMMAND,
     TEXT_TO_SPEECH_COMMAND,
@@ -38,8 +38,8 @@ def two_way_voice_mode():
 
             print(f"{USER_NAME}: {user_input}")
 
-            original_input = user_input
-            processed_input = input_processor(original_input)
+            corrected_input = correct_command_input(user_input)
+            processed_input = input_processor(corrected_input)
 
             if processed_input in RETURN_TO_TEXT_COMMAND:
                 print("Returning to keyboard mode.")
@@ -54,7 +54,7 @@ def two_way_voice_mode():
                 speak("Voice updated.")
                 continue
 
-            response = route_input(original_input, processed_input)
+            response = route_input(user_input, corrected_input, processed_input)
 
             print(f"{ASSISTANT_NAME}: {response}")
             speak(response)
@@ -82,8 +82,8 @@ def text_to_speech_mode():
             if not user_input.strip():
                 continue
 
-            original_input = user_input
-            processed_input = input_processor(original_input)
+            corrected_input = correct_command_input(user_input)
+            processed_input = input_processor(corrected_input)
 
             if processed_input in RETURN_TO_TEXT_COMMAND:
                 print("\nReturning to keyboard mode.\n")
@@ -98,7 +98,7 @@ def text_to_speech_mode():
                 speak("Voice updated.")
                 continue
 
-            response = route_input(original_input, processed_input)
+            response = route_input(user_input, corrected_input, processed_input)
 
             print(f"{ASSISTANT_NAME}: {response}")
             speak(response)
@@ -130,8 +130,8 @@ def voice_input_mode():
             if not user_input.strip():
                 continue
 
-            original_input = user_input
-            processed_input = input_processor(original_input)
+            corrected_input = correct_command_input(user_input)
+            processed_input = input_processor(corrected_input)
 
             if processed_input in RETURN_TO_TEXT_COMMAND:
                 print("Returning to keyboard mode.\n")
@@ -146,7 +146,7 @@ def voice_input_mode():
                 speak("Voice updated.")
                 continue
 
-            response = route_input(original_input, processed_input)
+            response = route_input(user_input, corrected_input, processed_input)
 
             print(f"{ASSISTANT_NAME}: {response}")
 

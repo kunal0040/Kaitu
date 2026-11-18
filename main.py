@@ -1,7 +1,12 @@
 from router import route_input
 from config import ASSISTANT_NAME, USER_NAME
 from audio import handle_voice_mode, voice_session
-from local_responses import input_processor, is_farewell, is_greeting
+from local_response.input_analyzer import (
+    input_processor,
+    correct_command_input,
+    is_farewell,
+    is_greeting,
+)
 
 
 def main():
@@ -14,8 +19,8 @@ def main():
         if not user_input.strip():
             continue
 
-        processed_input = input_processor(user_input)
-
+        corrected_input = correct_command_input(user_input)
+        processed_input = input_processor(corrected_input)
         mode_func = handle_voice_mode(processed_input)
 
         if mode_func:
@@ -29,10 +34,10 @@ def main():
                 continue
 
         try:
-            response = route_input(user_input, processed_input)
+            response = route_input(user_input, corrected_input, processed_input)
 
             print(f"{ASSISTANT_NAME}: {response}")
-            
+
             if is_farewell(processed_input):
                 break
 

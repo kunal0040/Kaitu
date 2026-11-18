@@ -1,5 +1,70 @@
 from config import USER_NAME, ASSISTANT_NAME, ASSISTANT_VERSION
 
+
+PRONUNCIATION_MAP = {
+    "Kunal": "Koo-naaal",
+}
+
+
+LOCAL_RESPONSES = {
+    "greeting": [
+        f"Hey {USER_NAME}! Hope your day is going great. What's on your mind?",
+        f"Hi {USER_NAME}! I'm up and ready. What are we working on today?",
+        f"Hello {USER_NAME}! Always good to see you. How can I help you out right now?",
+        "Hey! I'm here and listening. What's the plan?",
+        "Hi there! Ready when you are. What are we building next?",
+        f"Hey {USER_NAME}! Just waiting on you. How can I make your day easier?",
+    ],
+    "farewell": [
+        f"Bye {USER_NAME}! Catch you later. Have a good one!",
+        "Goodbye! I'll be right here whenever you need me again.",
+        "See you later! Don't work too hard, alright?",
+        f"Take care, {USER_NAME}. Chat with you soon!",
+        "Signing off for now. Have an awesome rest of your day!",
+        "Alright, shutting down. Let me know when you want to hang out again!",
+        f"{ASSISTANT_NAME} is going to sleep now. See you later, {USER_NAME}!",
+    ],
+    "identity": [
+        f"I'm {ASSISTANT_NAME}, your personal assistant and sidekick!",
+        f"My name is {ASSISTANT_NAME}. I'm here to help you automate stuff and make things easier.",
+        f"I am {ASSISTANT_NAME}! Just a friendly assistant running right on your laptop.",
+        f"You're talking to {ASSISTANT_NAME}. Your custom-made desktop companion.",
+        f"I'm {ASSISTANT_NAME}, always ready to help you manage your tasks and code.",
+        f"I am {ASSISTANT_NAME}! Think of me as your helpful digital buddy.",
+    ],
+    "user_identity": [
+        f"You're {USER_NAME}, an engineering student and the awesome developer who made me!",
+        f"My records say you are {USER_NAME}, the boss and main user of this computer.",
+        f"You are {USER_NAME}, my creator! You literally wrote my code yourself.",
+        f"Of course I know you! You're {USER_NAME}, my creator and friend.",
+        f"You're the head chef of this setup, {USER_NAME}!",
+        f"You are {USER_NAME}, sitting right at your desk working on some cool projects.",
+    ],
+    "creator": [
+        f"I was designed and written line-by-line by you, {USER_NAME}!",
+        f"You made me! My whole structure was initialized right here in your code editor.",
+        f"Credit for making me completely goes to you, {USER_NAME}.",
+        f"You created me, {USER_NAME}! From scratch.",
+        f"My developer is {USER_NAME}. You're the one pulling the strings!",
+        f"I'm proud to say I was custom-built by you, {USER_NAME}.",
+    ],
+    "version": [
+        f"I'm currently on version {ASSISTANT_VERSION}.",
+        f"We are running build version {ASSISTANT_VERSION} right now.",
+        f"This is {ASSISTANT_NAME} build {ASSISTANT_VERSION}.",
+        f"We're on version {ASSISTANT_VERSION}, sir. Everything is running smoothly.",
+        f"This is {ASSISTANT_NAME} Version {ASSISTANT_VERSION}. No issues found!",
+        f"We've got version {ASSISTANT_VERSION} loaded up and ready.",
+    ],
+    "status_check": [
+        "I'm here and ready.",
+        "I'm online and listening.",
+        "Running and ready for your input.",
+        "I'm here. What's next?",
+        f"{ASSISTANT_NAME} is active and ready.",
+    ],
+}
+
 LOCAL_PHRASES = {
     "greeting": [
         "hi",
@@ -104,66 +169,6 @@ LOCAL_PHRASES = {
         "what is the time and date",
         "whats the date and time",
         "whats the time and date",
-    ],
-}
-
-
-LOCAL_RESPONSES = {
-    "greeting": [
-        f"Hey {USER_NAME}! Hope your day is going great. What's on your mind?",
-        f"Hi {USER_NAME}! I'm up and ready. What are we working on today?",
-        f"Hello {USER_NAME}! Always good to see you. How can I help you out right now?",
-        "Hey! I'm here and listening. What's the plan?",
-        "Hi there! Ready when you are. What are we building next?",
-        f"Hey {USER_NAME}! Just waiting on you. How can I make your day easier?",
-    ],
-    "farewell": [
-        f"Bye {USER_NAME}! Catch you later. Have a good one!",
-        "Goodbye! I'll be right here whenever you need me again.",
-        "See you later! Don't work too hard, alright?",
-        f"Take care, {USER_NAME}. Chat with you soon!",
-        "Signing off for now. Have an awesome rest of your day!",
-        "Alright, shutting down. Let me know when you want to hang out again!",
-        f"{ASSISTANT_NAME} is going to sleep now. See you later, {USER_NAME}!",
-    ],
-    "identity": [
-        f"I'm {ASSISTANT_NAME}, your personal assistant and sidekick!",
-        f"My name is {ASSISTANT_NAME}. I'm here to help you automate stuff and make things easier.",
-        f"I am {ASSISTANT_NAME}! Just a friendly assistant running right on your laptop.",
-        f"You're talking to {ASSISTANT_NAME}. Your custom-made desktop companion.",
-        f"I'm {ASSISTANT_NAME}, always ready to help you manage your tasks and code.",
-        f"I am {ASSISTANT_NAME}! Think of me as your helpful digital buddy.",
-    ],
-    "user_identity": [
-        f"You're {USER_NAME}, an engineering student and the awesome developer who made me!",
-        f"My records say you are {USER_NAME}, the boss and main user of this computer.",
-        f"You are {USER_NAME}, my creator! You literally wrote my code yourself.",
-        f"Of course I know you! You're {USER_NAME}, my creator and friend.",
-        f"You're the head chef of this setup, {USER_NAME}!",
-        f"You are {USER_NAME}, sitting right at your desk working on some cool projects.",
-    ],
-    "creator": [
-        f"I was designed and written line-by-line by you, {USER_NAME}!",
-        f"You made me! My whole structure was initialized right here in your code editor.",
-        f"Credit for making me completely goes to you, {USER_NAME}.",
-        f"You created me, {USER_NAME}! From scratch.",
-        f"My developer is {USER_NAME}. You're the one pulling the strings!",
-        f"I'm proud to say I was custom-built by you, {USER_NAME}.",
-    ],
-    "version": [
-        f"I'm currently on version {ASSISTANT_VERSION}.",
-        f"We are running build version {ASSISTANT_VERSION} right now.",
-        f"This is {ASSISTANT_NAME} build {ASSISTANT_VERSION}.",
-        f"We're on version {ASSISTANT_VERSION}, sir. Everything is running smoothly.",
-        f"This is {ASSISTANT_NAME} Version {ASSISTANT_VERSION}. No issues found!",
-        f"We've got version {ASSISTANT_VERSION} loaded up and ready.",
-    ],
-    "status_check": [
-        "I'm here and ready.",
-        "I'm online and listening.",
-        "Running and ready for your input.",
-        "I'm here. What's next?",
-        f"{ASSISTANT_NAME} is active and ready.",
     ],
 }
 
@@ -299,11 +304,6 @@ TOGGLE_VOICE_GENDER_COMMAND = {
     "give me a different voice",
 }
 
-PRONUNCIATION_MAP = {
-    "Kunal": "Koo-naaal",
-}
-
-
 MEMORY_COMMANDS = [
     "remember that ",
     "keep in mind that ",
@@ -361,3 +361,45 @@ MEMORY_STATEMENTS = {
         f"Say no more, {USER_NAME}. We will never speak of this again.",
     ],
 }
+
+SYMBOLS_REPLACEMENTS = {
+    "plus": "+",
+    "add": "+",
+    "added to": "+",
+    "minus": "-",
+    "subtract": "-",
+    "subtracted by": "-",
+    "times": "*",
+    "multiplied by": "*",
+    "multiply by": "*",
+    "divided by": "/",
+    "divide by": "/",
+    "over": "/",
+    "to the power of": "**",
+    "raised to the power of": "**",
+    "power": "**",
+    "squared": "**2",
+    "cubed": "**3",
+    "square root of": "**0.5",
+    "percent of": "*0.01*",
+    "percentage of": "*0.01*",
+    "percent": "*0.01",
+    "percentage": "*0.01",
+}
+
+MATH_ANSWER_PREFIXS = [
+    "The answer is",
+    "The final result is",
+    "Therefore, we get",
+    "Thus, the solution is",
+    "Hence, the value is",
+    "This simplifies to",
+    "Evaluating this yields",
+    "Which gives us",
+    "The calculated value is",
+    "The result evaluates to",
+    "So, the answer is",
+    "The mathematical solution is",
+    "It follows that the answer is",
+    "The computed result is",
+]

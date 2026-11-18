@@ -1,7 +1,7 @@
 import re
 from config import ASSISTANT_VOICES
-from local_responses import normalize_input
-from commands import (
+from local_response.input_analyzer import normalize_input
+from local_response.commands import (
     SWITCH_TO_FEMALE_COMMAND,
     SWITCH_TO_MALE_COMMAND,
     TOGGLE_VOICE_GENDER_COMMAND,

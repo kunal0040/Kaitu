@@ -1,10 +1,10 @@
 ### Kaitu ###
 
-**Personal AI Assistant** — Version `0a2 - Foxy`
+**Personal AI Assistant** — Version `0a3 - Foxy`
 
 Kaitu is a modular Python personal assistant for Windows. It combines local models through Ollama, optional cloud models through Google Gemini and Groq, voice interaction, persistent facts, desktop commands, and modular skills.
 
-> **Current Status:** `0a2`
+> **Current Status:** `0a3`
 > Experimental project under active development.
 
 ## Features ##
@@ -15,6 +15,8 @@ Kaitu is a modular Python personal assistant for Windows. It combines local mode
 - Persistent user facts and short-term conversation history
 - Input routing for local responses, memory, math, commands, and AI fallback
 - Deterministic local responses for common interactions
+- Wake-word removal and fuzzy correction for command vocabulary
+- Local greeting, identity, status, date, and time responses
 
 ### Commands
 
@@ -24,6 +26,7 @@ Kaitu is a modular Python personal assistant for Windows. It combines local mode
 - Web search
 - Windows application discovery
 - Command aliases and natural-language command handling
+- Personal website shortcuts from `data/personal_webpages.json`
 
 ### Voice
 
@@ -31,6 +34,7 @@ Kaitu is a modular Python personal assistant for Windows. It combines local mode
 - Text-to-Speech / read-aloud mode
 - Speech-to-Text / dictation mode
 - Voice input and output controls
+- Switchable male/female Piper voices and return-to-keyboard controls
 
 ### Skills
 
@@ -47,7 +51,6 @@ Kaitu is a modular Python personal assistant for Windows. It combines local mode
 | Speech Recognition | faster-whisper |
 | Text-to-Speech | Piper TTS |
 | Memory | JSON facts + in-memory conversation history |
-| Testing | pytest dependency (test files are gitignored locally) |
 | Platform | Windows |
 
 
@@ -58,18 +61,18 @@ main.py
   ├─ normalize input and detect voice mode
   ├─ audio.voice_talk (optional voice sessions)
   └─ router.route_input
-       ├─ local_responses
+       ├─ local_response.input_analyzer
        ├─ data.memory (fact commands, summary and conversation logs)
        ├─ skills.calculator
-       ├─ command_engine (app control, web search, reading)
+       ├─ local_response.command_engine (app control, web search, reading)
        └─ brain.ask_assistant
-            └─ provider_manager
+            └─ providers.provider_manager
                  ├─ Ollama
-                 ├─ Groq
                  └─ Gemini
+                 └─ Groq
 ```
 
-The router handles farewells, local responses, memory, calculations, and recognized commands before falling back to an AI provider. Voice sessions use the same router.
+The router handles local responses, memory commands and recognized commands before falling back to an AI provider. Farewell responses are local, and the main loop exits after a farewell. Voice sessions use the same router.
 
 Input handling removes a leading wake word. Local routing uses normalized text, while the AI fallback receives the original input with the wake word removed.
 
@@ -87,22 +90,23 @@ Kaitu/
 ├── main.py
 ├── router.py
 ├── brain.py
-├── provider_manager.py
 ├── config.py
-├── commands.py
-├── local_responses.py
-├── command_engine.py
-├── aliases.py
-├── app_discovery.py
 ├── data/
 │   ├── memory.py
 │   └── logs/
 │       └── conversation_logs.py
 ├── providers/
 │   ├── __init__.py
+│   ├── provider_manager.py
 │   ├── ollama_provider.py
 │   ├── groq_provider.py
 │   └── gemini_provider.py
+├── local_response/
+│   ├── aliases.py
+│   ├── app_discovery.py
+│   ├── command_engine.py
+│   ├── commands.py
+│   └── input_analyzer.py
 ├── audio/
 │   ├── __init__.py
 │   ├── speech_input.py
@@ -119,17 +123,15 @@ Kaitu/
 
 ### Command phrases
 
-`commands.py` is the phrase and response registry used by Kaitu's local interactions. It groups phrases by intent for greetings, farewells, identity, status, date, and time, and provides the corresponding local responses. It also defines phrase lists and related data for voice controls, wake words, pronunciation, and memory commands.
-
-The modules that handle these features import the relevant constants from `commands.py`; phrase matching and command behavior are implemented in those modules.
+`local_response/commands.py` is the phrase and response registry used by Kaitu's local interactions. It groups phrases by intent for greetings, farewells, identity, status and provides the corresponding local responses. It also defines phrase lists and related data for voice controls and other relevant commands.
 
 ### Personal webpage shortcuts
 
-`data/personal_webpages.json` maps shortcut names to URLs under the `WEB_SITES` key. `command_engine.py` loads these shortcuts so a command such as `open github` opens its configured URL. This file is local and ignored by Git.
+`data/personal_webpages.json` maps shortcut names to URLs under the `WEB_SITES` key. `local_response/command_engine.py` loads these shortcuts so a command such as `open github` opens its configured URL. This file is local and ignored by Git.
 
 ## Memory
 
-`data/memory.py` stores user facts in the ignored runtime file `data/memory.json`. The expected format is:
+`data/memory.py` stores user facts in the local runtime file `data/memory.json`. The expected format is:
 
 ```json
 {
@@ -143,15 +145,15 @@ The modules that handle these features import the relevant constants from `comma
 }
 ```
 
-Use explicit phrases such as `remember that I live in India`, `forget that I live in India`, or `what do you know about me`. Forgetting currently compares wording after trimming outer whitespace and ignoring capitalization; semantic matching is not implemented. Summaries are generated locally through Ollama.
+Use explicit phrases such as `remember that I live in India`, `forget that I live in India`, or `what do you know about me`. Duplicate and forget matching normalize text (including case and punctuation), but do not infer semantic equivalence. Summaries are generated locally through Ollama.
 
-Conversation context is kept in memory for the current process only, limited to the latest 10 messages.
+Conversation context is kept in memory for the current process only, limited to the latest 20 messages.
 
 ### Conversation log
 
-`data/logs/conversation_logs.py` loads and saves the persistent log at `data/logs/conversation_log.json`. Each entry records the original input, processed input, assistant response, and conversation time. The JSON file is generated locally and ignored by Git; it is separate from the short-term conversation context above.
+`data/logs/conversation_logs.py` loads and saves the persistent log at `data/logs/conversation_log.json`. Each entry records the original input, processed input, assistant response, and conversation time. The JSON file is generated locally and is separate from the short-term conversation context above.
 
-Cloud providers receive the saved memory context when used, so avoid storing sensitive information if you do not want it sent to a cloud service.
+AI providers receive saved memory context and in-process conversation history when used. Avoid storing sensitive information if you do not want it sent to a cloud provider.
 
 ## Setup ##
 
@@ -233,7 +235,7 @@ You: remember that I live in India
 Kaitu: Got it, {your_name}, I'll remember that for next time.
 
 You: cloud explain this concept
-→ Uses Groq, then Gemini, then local Ollama if needed
+→ Uses Gemini, then Groq, then local Ollama if needed
 
 You: ola explain this concept
 → Uses the configured local Ollama memory model
@@ -251,7 +253,7 @@ Example settings:
 ```python
 ASSISTANT_NAME = "Kaitu"
 USER_NAME = "your_name"
-ASSISTANT_VERSION = "0a2 - Foxy"
+ASSISTANT_VERSION = "0a3 - Foxy"
 MODEL_NAME_GROQ = "openai/gpt-oss-120b"
 MODEL_NAME_GEMINI = "gemini-3.5-flash"
 TALK_MODEL = "phi4-mini"
@@ -261,14 +263,14 @@ MEMORY_MODEL = "huihui_ai/qwen3-abliterated:8b"
 
 ## Current Limitations ##
 
-Kaitu `0a2` is an experimental release.
+Kaitu `0a3 - Foxy` is an experimental release. Voice features require a working microphone and the Piper voice model files configured in `config.py`. Speech recognition tries the configured CUDA device and falls back to CPU if unavailable.
 
 
 ## Versioning ##
 
 Current release:
 
-**`0a2 - Foxy`**
+**`0a3 - Foxy`**
 
 This is an early experimental release. APIs, architecture, features, and internal components may change significantly in future versions.
 
@@ -288,4 +290,4 @@ Use and modify freely for learning and personal purposes.
 
 Built as a personal AI assistant project.
 
-**Kaitu `0a2 - Foxy`**
+**Kaitu `0a3 - Foxy`**
