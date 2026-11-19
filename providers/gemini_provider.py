@@ -4,7 +4,7 @@ from google.genai import types
 from dotenv import load_dotenv
 
 from config import MODEL_NAME_GEMINI, SYSTEM_PROMPT
-from data.memory import get_conversation_history, get_memory_context
+from data import get_conversation_history, get_memory_context
 
 load_dotenv()
 

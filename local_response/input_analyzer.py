@@ -1,12 +1,10 @@
 import re
 import string
 import random
-import local_response.aliases as aliases
 import difflib
-import local_response.commands as commands
 from datetime import datetime
-from data.logs.conversation_logs import save_conversation
-from .commands import LOCAL_PHRASES, LOCAL_RESPONSES, WAKE_WORDS
+from . import aliases, commands
+from local_response import LOCAL_PHRASES, LOCAL_RESPONSES, WAKE_WORDS
 
 
 def normalize_input(user_input):
@@ -131,7 +129,7 @@ def command_vocabulary():
 COMMAND_VOCAB = command_vocabulary()
 
 
-def correct_command_input(text: str, cutoff: float = 0.62) -> str:
+def correct_command_input(text: str, cutoff: float = 0.75) -> str:
 
     if not text:
         return text
@@ -173,13 +171,13 @@ def correct_command_input(text: str, cutoff: float = 0.62) -> str:
         ]
 
         if len(word) <= 3:
-            threshold = 0.60
+            threshold = 0.75
 
         elif len(word) <= 5:
-            threshold = 0.70
+            threshold = 0.82
 
         elif len(word) <= 8:
-            threshold = 0.78
+            threshold = 0.80
 
         else:
             threshold = cutoff
@@ -198,6 +196,7 @@ def is_farewell(user_input):
 
 
 def is_greeting():
+    from data import save_conversation
     response = random.choice(LOCAL_RESPONSES["greeting"])
     save_conversation("Start", "Start", response)
     print(response)

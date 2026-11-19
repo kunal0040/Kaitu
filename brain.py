@@ -1,4 +1,4 @@
-from providers.provider_manager import ask_provider
+from providers import ask_provider
 
 
 def ask_assistant(prompt):

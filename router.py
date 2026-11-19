@@ -1,9 +1,12 @@
 from brain import ask_assistant
-from data.memory import handle_memory_command, add_message
-from data.logs.conversation_logs import save_conversation
-from local_response.command_engine import detect_command, execute_command
-from local_response.input_analyzer import get_local_response, remove_wake_word
+from data import save_conversation, handle_memory_command, add_message
 from skills.calculator import looks_like_math_expression, execute_calculations
+from local_response import (
+    detect_command,
+    execute_command,
+    get_local_response,
+    remove_wake_word,
+)
 
 
 def route_input(original_input, corrected_input, processed_input):

@@ -1,7 +1,7 @@
 from router import route_input
 from config import ASSISTANT_NAME, USER_NAME
 from audio import handle_voice_mode, voice_session
-from local_response.input_analyzer import (
+from local_response import (
     input_processor,
     correct_command_input,
     is_farewell,

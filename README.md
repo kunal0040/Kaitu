@@ -92,6 +92,7 @@ Kaitu/
 ├── brain.py
 ├── config.py
 ├── data/
+│   ├── __init__.py
 │   ├── memory.py
 │   └── logs/
 │       └── conversation_logs.py
@@ -102,6 +103,7 @@ Kaitu/
 │   ├── groq_provider.py
 │   └── gemini_provider.py
 ├── local_response/
+│   ├── __init__.py
 │   ├── aliases.py
 │   ├── app_discovery.py
 │   ├── command_engine.py

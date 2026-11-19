@@ -3,8 +3,10 @@ from .speech_output import speak
 from .voice_processing import voice_choices
 from .speech_input import listen, load_model
 from config import ASSISTANT_NAME, USER_NAME
-from local_response.input_analyzer import input_processor, correct_command_input, is_farewell
-from local_response.commands import (
+from local_response import (
+    input_processor,
+    correct_command_input,
+    is_farewell,
     RETURN_TO_TEXT_COMMAND,
     TWO_WAY_VOICE_COMMAND,
     TEXT_TO_SPEECH_COMMAND,

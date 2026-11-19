@@ -3,8 +3,8 @@ import json
 import subprocess
 import webbrowser
 from urllib.parse import quote_plus
-from .aliases import COMMAND_ALIASES, normalize_target
-from .app_discovery import get_installed_apps, close_application
+from .aliases import COMMAND_ALIASES
+from .app_discovery import get_installed_apps, close_application, normalize_target
 
 PERSONAL_WEBPAGES_FILE = "data/personal_webpages.json"
 

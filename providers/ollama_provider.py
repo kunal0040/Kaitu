@@ -1,5 +1,5 @@
 import requests
-from data.memory import get_conversation_history, get_memory_context
+from data import get_conversation_history, get_memory_context
 from config import SYSTEM_PROMPT, OLLAMA_URL, ASSISTANT_NAME, USER_NAME
 
 
@@ -16,6 +16,7 @@ def get_system_prompt(model_name):
     5. Blank Input Handling: Only when the user's message contains no characters or only whitespace, reply exactly:
         "Waiting for your message..."
         For any non-empty user message, NEVER use this response and answer the user's request normally.
+    6. Always respond in the same language the user writes in.
         
     Remember: Answer directly, stop writing quickly.
     """
@@ -40,7 +41,7 @@ def ask(prompt, model_name):
         "stream": False,
     }
 
-    response = requests.post(OLLAMA_URL, json=payload)
+    response = requests.post(OLLAMA_URL, json=payload, timeout=120)
     response.raise_for_status()
 
     data = response.json()
