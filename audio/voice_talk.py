@@ -58,7 +58,7 @@ def two_way_voice_mode():
 
             response = route_input(user_input, corrected_input, processed_input)
 
-            print(f"{ASSISTANT_NAME}: {response}")
+            print(f"{ASSISTANT_NAME}: {response}\n")
             speak(response)
 
             if is_farewell(processed_input):
@@ -102,7 +102,7 @@ def text_to_speech_mode():
 
             response = route_input(user_input, corrected_input, processed_input)
 
-            print(f"{ASSISTANT_NAME}: {response}")
+            print(f"{ASSISTANT_NAME}: {response}\n")
             speak(response)
 
             if is_farewell(processed_input):
@@ -127,7 +127,7 @@ def voice_input_mode():
 
         try:
             user_input = listen(model)
-            print(f"{USER_NAME}: {user_input}")
+            print(f"{USER_NAME}: {user_input}\n")
 
             if not user_input.strip():
                 continue

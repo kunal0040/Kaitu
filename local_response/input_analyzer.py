@@ -93,6 +93,8 @@ def command_vocabulary():
     excluded_commands = {
         "LOCAL_RESPONSES",
         "PRONUNCIATION_MAP",
+        "MEMORY_STATEMENTS", 
+        "MATH_ANSWER_PREFIXS",
     }
 
     for name in dir(commands):

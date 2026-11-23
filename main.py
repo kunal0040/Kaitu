@@ -43,6 +43,8 @@ def main():
 
         except Exception as error:
             print(f"[Something Went Wrong]: {error}")
+            from data import save_conversation
+            save_conversation(user_input, processed_input,f"[ERROR] -  {error}")
 
 
 if __name__ == "__main__":
