@@ -6,7 +6,7 @@ ASSISTANT_VERSION = "0a3 - Foxy"
 WHISPER_MODEL = "small"
 WHISPER_DEVICE = "cuda"
 OLLAMA_URL = "http://localhost:11434/api/chat"
-TALK_MODEL = "kaitu-phi4-mini"
+TALK_MODEL = "phi4:mini-kaitu"
 MEMORY_MODEL = "huihui_ai/qwen3-abliterated:8b"
 ASSISTANT_VOICES = {
     "male": "audio/voices/en_US-norman-medium.onnx",

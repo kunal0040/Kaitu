@@ -262,6 +262,15 @@ TALK_MODEL = "phi4-mini"
 MEMORY_MODEL = "huihui_ai/qwen3-abliterated:8b"
 ```
 
+---
+
+### Model Architecture & Fine-Tuning
+
+The core intelligence of Kaitu is powered by **`phi4:mini-kaitu`**, a custom fine-tuned model derived from Microsoft's Phi-4-mini (3.8B) using QLoRA and quantized to 4-bit `Q4_K_M GGUF` for low-latency local execution on Ollama.
+
+- **Fine-Tuning Codebase & Benchmarks**: [kunal0040/Finetune-Phi4-mini](https://github.com/kunal0040/Finetune-Phi4-mini)
+- **Benchmark History**: Evaluated across 500+ curated prompts through 8 full iterations (V1–V8).
+- **Runtime Guards**: Features deterministic safety guards for command interception, syntax validation, and memory injection.
 
 ## Current Limitations ##
 
